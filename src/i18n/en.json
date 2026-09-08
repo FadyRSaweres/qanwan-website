@@ -187,5 +187,21 @@
     "signing_in": "Signing in...",
     "login_error": "Invalid credentials",
     "protected_area": "Protected area · Admin access only"
-  }
+  },
+  "nav.aboutQanwan": "Qanwan",
+  "nav.home": "Home",
+  "nav.about": "About ",
+  "nav.investmentModel": "Investment Model",
+  "nav.investments": "Investments",
+  "nav.successPartners": "Success Partners",
+  "nav.performanceIndicators": "Performance Indicators",
+  "nav.mediaCenter": "Media Center",
+  "nav.initiatives": "Initiatives",
+  "nav.academy": "academy",
+  "nav.services": "services",
+  "nav.contact": "contact",
+  "nav.news": "News",
+  "nav.events": "Event",
+  "nav.community": "Qanwan Community",
+  "nav.qanwan_national": "Qanwan National Initiative"
 }

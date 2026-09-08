@@ -1,11 +1,4 @@
 {
-  "nav": {
-    "home": "الرئيسية",
-    "about": "من نحن",
-    "services": "خدماتنا",
-    "contact": "تواصل معنا",
-    "getInTouch": "تواصل معنا"
-  },
   "hero": {
     "badge": "حلول برمجية · مصممة للثقة",
     "title": "شريكك في التحول الرقمي على مستوى عالمي",
@@ -187,5 +180,23 @@
     "signing_in": "جاري الدخول...",
     "login_error": "بيانات الاعتماد غير صالحة",
     "protected_area": "منطقة محمية · وصول الإدارة فقط"
-  }
+  },
+  "nav": {
+    "about": "عن الشركة",
+    "aboutQanwan": "قنوان",
+    "home": "الرئيسية",
+    "investmentModel": "النموذج الاستثماري",
+    "investments": "استثماراتنا",
+    "successPartners": "شركاء النجاح",
+    "performanceIndicators": "مؤشرات الأداء",
+    "mediaCenter": "المركز الإعلامي",
+    "initiatives": "المبادرات",
+    "academy": "اكاديمية قنوان",
+    "services": "الخدمات",
+    "contact": "تواصل معنا"
+  },
+  "nav.news": "الاخبار",
+  "nav.events": "الفعاليات",
+  "nav.community": "مجتمع قنوان",
+  "nav.qanwan_national": "مبادرة قنوان الوطنية"
 }
