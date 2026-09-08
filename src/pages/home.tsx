@@ -14,13 +14,14 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import SectionHeading from "@/components/SectionHeading";
 import whyChooseBg from "@/assets/why_us_section_svg_bg.svg";
-import vectorImage from "@/assets/data2.png";
 import heroVector from "@/assets/hero2.png";
+import slideImg6 from "@/assets/6.jpg";
+import slideImg5 from "@/assets/5.jpg";
 import { useTranslation } from "react-i18next";
 import { useGetHomeSection1Api } from "@/services/home/section1";
-import { getCurrentLanguage } from "@/services/client";
 import { useGetHomeSection2Api } from "@/services/home/section2";
 import { useMemo } from "react";
+import HeroSlider, { SlideItem } from "@/components/HeroSlider";
 
 const Home = () => {
   const { t } = useTranslation();
@@ -85,153 +86,38 @@ const Home = () => {
     },
   ];
 
+  // Mockup API data for the hero slider
+  const heroSlides: SlideItem[] = useMemo(() => [
+    {
+      id: "mock1",
+      title: "فعاليات المنتدى الليبي الدولي للاقتصاد البحري",
+      titleEn: "Events of the Libyan International Maritime Economy Forum",
+      description: "ينظم الاتحاد العام للغرف المنتدى الليبي الدولي للاقتصاد البحري ، و التي أقيمت فعالياته يومي 10-11 يناير 2026 باستضافة كريمة من المنطقة الحرة مصراتة. ويأتي تنظيم هذا المنتدى في إطار تعزيز الشراكات المؤسسية والعمل المشترك بين الجهات الوطنية، ودعم توجهات الاقتصاد البحري بما يسهم في خدمة الاقتصاد الوطني وتعزيز مسارات التنمية المستدامة.",
+      descriptionEn: "The General Union of Chambers organizes the Libyan International Maritime Economy Forum, whose events were held on January 10-11, 2026, hosted by the Misrata Free Zone.",
+      image: slideImg6,
+    },
+    {
+      id: "mock2",
+      title: "تطوير البنية التحتية والمشاريع الاستراتيجية",
+      titleEn: "Infrastructure Development and Strategic Projects",
+      description: "نعمل على بناء وتطوير البنية التحتية لتواكب متطلبات العصر وتدعم مسيرة النمو الاقتصادي من خلال تنفيذ مشاريع استراتيجية تهدف إلى تحقيق التنمية المستدامة.",
+      descriptionEn: "We are working to build and develop infrastructure to meet modern requirements and support economic growth by implementing strategic projects aimed at achieving sustainable development.",
+      image: slideImg5,
+    },
+    {
+      id: "mock3",
+      title: "دعم الابتكار والريادة في الأعمال",
+      titleEn: "Supporting Innovation and Entrepreneurship",
+      description: "مبادراتنا تركز على تشجيع الابتكار وريادة الأعمال، وتقديم الدعم اللازم للشباب والشركات الناشئة ليكونوا شركاء حقيقيين في صناعة المستقبل الاقتصادي.",
+      descriptionEn: "Our initiatives focus on encouraging innovation and entrepreneurship, providing the necessary support for youth and startups to be true partners in shaping the economic future.",
+      image: slideImg5
+    }
+  ], []);
+
   return (
     <>
-      {/* ─── Hero ─── */}
-      <section className="relative overflow-hidden bg-gradient-hero text-white min-h-[90vh] flex items-center">
-
-        {/* Dot grid */}
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0"
-          style={{
-            backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.07) 1px, transparent 1px)",
-            backgroundSize: "32px 32px",
-          }}
-        />
-
-        {/* Glow blobs */}
-        <div aria-hidden="true" className="pointer-events-none absolute -top-40 -left-40 h-[600px] w-[600px] rounded-full blur-[130px]" style={{ background: "hsl(212 90% 54% / 0.18)" }} />
-        <div aria-hidden="true" className="pointer-events-none absolute -bottom-40 right-0 h-[500px] w-[500px] rounded-full blur-[120px]" style={{ background: "hsl(199 95% 58% / 0.12)" }} />
-
-        {/* Bottom fade into page */}
-        <div className="absolute bottom-0 inset-x-0 h-32 bg-gradient-to-t from-background to-transparent" />
-
-        <div className="container relative z-10 py-24 md:py-32">
-          <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
-
-            {/* ── Left: Text ── */}
-            <div className="animate-fade-up text-center lg:text-start">
-              <motion.span
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
-                className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/8 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-white/80 backdrop-blur">
-                <span className="h-1.5 w-1.5 rounded-full bg-ring animate-pulse" />
-                {t("hero.badge")}
-              </motion.span>
-
-              <h1 className="mt-4 text-4xl font-bold leading-[2] sm:text-5xl md:text-6xl" style={{ lineHeight: 1.3 }}>
-                {
-                  t("hero.title")}
-              </h1>
-
-              <p className="mx-auto mt-6 max-w-xl text-base leading-relaxed text-white/65 sm:text-lg lg:mx-0">
-                {t("hero.subtitle")}
-              </p>
-
-              <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row lg:justify-start">
-                <Button
-                  asChild
-                  size="lg"
-                  className="bg-white text-black hover:bg-white/90 shadow-elegant font-semibold"
-                >
-                  <Link to="/services">
-                    {t("hero.ourServices")} <ArrowRight className="ms-1.5 h-4 w-4" />
-                  </Link>
-                </Button>
-                <Button
-                  asChild
-                  size="lg"
-                  variant="outline"
-                  className="border-white/25 bg-white/5 text-white backdrop-blur hover:bg-white/12 hover:text-white hover:border-white/40"
-                >
-                  <Link to="/contact">{t("hero.contactUs")}</Link>
-                </Button>
-              </div>
-
-              {/* Trust badges */}
-              <div className="mt-12 flex flex-wrap items-center justify-center gap-6 lg:justify-start">
-                {[
-                  { value: homeSection1Data?.[0]?.firstCountNumber || 0, label: t("hero.stat1") },
-                  { value: homeSection1Data?.[0]?.secondCountNumber || 0, label: t("hero.stat2") },
-                  { value: homeSection1Data?.[0]?.thirdCountNumber || 0, label: t("hero.stat3") },
-                ].map((s) => (
-                  <div key={s.label} className="text-center lg:text-start">
-                    <div className="text-2xl font-black tracking-tight text-white">{s.value}</div>
-                    <div className="text-[11px] font-medium uppercase tracking-wider text-white/45">{s.label}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* ── Right: Vector illustration ── */}
-            <div className="relative flex items-center justify-center animate-fade-in">
-
-              {/* Glowing backdrop circle */}
-              <div
-                aria-hidden="true"
-                className="absolute h-[420px] w-[420px] rounded-full"
-                style={{
-                  background: "radial-gradient(circle, hsl(212 90% 54% / 0.18) 0%, transparent 70%)",
-                }}
-              />
-
-              {/* Decorative rings */}
-              <div
-                aria-hidden="true"
-                className="absolute h-[380px] w-[380px] rounded-full border border-white/8"
-              />
-              <div
-                aria-hidden="true"
-                className="absolute h-[480px] w-[480px] rounded-full border border-white/4"
-              />
-
-              {/* Floating stat card — top left */}
-              <div className="absolute -left-4 top-8 z-20 flex items-center gap-3 rounded-2xl border border-white/10 bg-white/8 px-4 py-3 backdrop-blur-md shadow-card animate-fade-up"
-                style={{ animationDelay: "0.3s" }}>
-                <div className="flex h-9 w-9 items-center justify-center rounded-xl" style={{ background: "hsl(var(--ring))" }}>
-                  <svg className="h-4 w-4 text-white" viewBox="0 0 20 20" fill="currentColor">
-                    <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z" />
-                  </svg>
-                </div>
-                <div>
-                  <div className="text-xs font-bold text-white">+42% Growth</div>
-                  <div className="text-[10px] text-white/50">This Quarter</div>
-                </div>
-              </div>
-
-              {/* Floating badge — bottom right */}
-              <div className="absolute -right-2 bottom-10 z-20 flex items-center gap-3 rounded-2xl border border-white/10 bg-white/8 px-4 py-3 backdrop-blur-md shadow-card animate-fade-up"
-                style={{ animationDelay: "0.5s" }}>
-                <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-500/80">
-                  <svg className="h-4 w-4 text-white" viewBox="0 0 20 20" fill="currentColor">
-                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                  </svg>
-                </div>
-                <div>
-                  <div className="text-xs font-bold text-white">All Systems Live</div>
-                  <div className="text-[10px] text-white/50">Integrated & Running</div>
-                </div>
-              </div>
-
-              {/* The vector image */}
-              <motion.img
-                src={vectorImage}
-                alt="System Integration"
-                className="relative z-10 w-full max-w-[500px] drop-shadow-2xl"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1.6 }}
-                style={{
-                  filter: "drop-shadow(0 20px 60px hsl(212 90% 54% / 0.3))",
-                }}
-              />
-            </div>
-
-          </div>
-        </div>
-      </section>
+      {/* ─── Hero Slider ─── */}
+      <HeroSlider slides={heroSlides} />
 
 
 
