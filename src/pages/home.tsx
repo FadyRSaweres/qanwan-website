@@ -1,14 +1,8 @@
 import { Link } from "react-router-dom";
 import {
-  ArrowRight,
-  Code2,
-  Smartphone,
-  Server,
-  Layers,
   ShieldCheck,
   Gauge,
   Rocket,
-  CheckCircle2,
   Users,
   Box,
   Briefcase,
@@ -19,8 +13,6 @@ import {
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import SectionHeading from "@/components/SectionHeading";
-import whyChooseBg from "@/assets/why_us_section_svg_bg.svg";
-import heroVector from "@/assets/hero2.png";
 import slideImg6 from "@/assets/6.jpg";
 import slideImg5 from "@/assets/5.jpg";
 import { useTranslation } from "react-i18next";
@@ -28,10 +20,12 @@ import { useGetHomeSection1Api } from "@/services/home/section1";
 import { useGetHomeSection2Api } from "@/services/home/section2";
 import { useMemo } from "react";
 import HeroSlider, { SlideItem } from "@/components/HeroSlider";
-import { title } from "process";
+import { mockHomeSection, mockStats } from "./mockData/home";
+import { AnimatedCounter } from "@/components/AnimatedCounter";
 
 const Home = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const isRtl = i18n.language === "ar";
 
   const { data: homeSection1Data } = useGetHomeSection1Api();
   const { data: homeSection2Data } = useGetHomeSection2Api();
@@ -56,66 +50,18 @@ const Home = () => {
   ], [homeSection2Data]);
 
 
-  const stats = useMemo(
-    () => [
-      {
-        icon: TrendingUp,
-        value: t("homeStats.stat4_value"),
-        label: t("homeStats.stat4_label"),
-      },
-      {
-        icon: Briefcase,
-        value: t("homeStats.stat3_value"),
-        label: t("homeStats.stat3_label"),
-      },
-      {
-        icon: Target,
-        value: t("homeStats.stat2_value"),
-        label: t("homeStats.stat2_label"),
-      },
-      {
-        icon: Globe,
-        value: t("homeStats.stat1_value"),
-        label: t("homeStats.stat1_label"),
-      },
-    ],
-    [t]
-  );
 
+  const getIconFromType = (type: string) => {
+    switch (type) {
+      case "+":
+        return Briefcase;
+      case "%":
+        return TrendingUp;
+      case "Empty":
+        return Users;
+    }
+  }
 
-
-  const reasons = [
-    { icon: ShieldCheck, title: t("whyUs.trusted"), desc: t("whyUs.trustedDesc") },
-    { icon: Gauge, title: t("whyUs.performance"), desc: t("whyUs.performanceDesc") },
-    { icon: Rocket, title: t("whyUs.scale"), desc: t("whyUs.scaleDesc") },
-  ];
-
-  const capabilities = [
-    {
-      label: t("capabilities.dataInsights"),
-      desc: t("capabilities.dataInsightsDesc"),
-      color: "from-blue-500/20 to-indigo-500/10",
-      accent: "#6366f1",
-    },
-    {
-      label: t("capabilities.predictive"),
-      desc: t("capabilities.predictiveDesc"),
-      color: "from-violet-500/20 to-purple-500/10",
-      accent: "#8b5cf6",
-    },
-    {
-      label: t("capabilities.integration"),
-      desc: t("capabilities.integrationDesc"),
-      color: "from-cyan-500/20 to-blue-500/10",
-      accent: "#06b6d4",
-    },
-    {
-      label: t("capabilities.infrastructure"),
-      desc: t("capabilities.infrastructureDesc"),
-      color: "from-teal-500/20 to-cyan-500/10",
-      accent: "#14b8a6",
-    },
-  ];
 
   // Mockup API data for the hero slider
   const heroSlides: SlideItem[] = useMemo(() => [
@@ -179,8 +125,12 @@ const Home = () => {
         <div className="container">
           <SectionHeading
             eyebrow={t("homeServices.future_vision")}
-            title={t("homeServices.title")}
-            description={t("homeServices.description")}
+            title={isRtl ?
+              mockHomeSection?.section_1_title_ar :
+              mockHomeSection?.section_1_title_en || t("homeServices.title")}
+            description={isRtl ?
+              mockHomeSection?.section_1_description_ar :
+              mockHomeSection?.section_1_description_en || t("homeServices.description")}
           />
           <div className="mt-2 flex gap-2 justify-center">
             <Button variant="default">
@@ -192,8 +142,12 @@ const Home = () => {
           </div>
           <SectionHeading className="mt-16 mb-2"
             // eyebrow={t("homeServices.future_vision")}
-            title={t("homeServices.title_cards")}
-            description={t("homeServices.subtitle")}
+            title={isRtl ?
+              mockHomeSection?.section_2_title_ar :
+              mockHomeSection?.section_2_title_en || t("homeServices.title_cards")}
+            description={isRtl ?
+              mockHomeSection?.section_2_description_ar :
+              mockHomeSection?.section_2_description_en || t("homeServices.subtitle")}
           />
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {investmentModels.map((s) => (
@@ -222,8 +176,8 @@ const Home = () => {
       >
         <div className="container mx-auto px-6">
           <div className="grid grid-cols-2 gap-y-10 sm:grid-cols-4 sm:gap-y-0">
-            {stats.map((stat, idx) => {
-              const Icon = stat.icon;
+            {mockStats.map((stat, idx) => {
+              const Icon = getIconFromType(stat.type);
               return (
                 <div
                   key={idx}
@@ -233,11 +187,15 @@ const Home = () => {
                     className="mb-4 h-8 w-8 text-secondary-500"
                     strokeWidth={1.5}
                   />
-                  <div className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
-                  {stat.value}
-                </div>
+                  <motion.div className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
+                    <AnimatedCounter
+                      to={stat.count}
+                      suffix={stat.type === "Empty" ? "" : stat.type}
+                      duration={2}
+                    />
+                  </motion.div>
                   <div className="mt-2 text-sm font-medium text-gray-300 sm:text-base">
-                  {stat.label}
+                    {isRtl ? stat.title_ar : stat.title_en}
                 </div>
               </div>
               );

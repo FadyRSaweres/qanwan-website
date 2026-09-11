@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 import { Linkedin, Twitter, Facebook } from "lucide-react";
 import { motion } from "framer-motion";
-import type { EventItem } from "./types";
+import { EventItem } from "../mockData/events";
 
 interface EventCardProps {
   event: EventItem;
@@ -10,14 +10,15 @@ interface EventCardProps {
 }
 
 export function EventCard({ event, onOpen, index = 0 }: EventCardProps) {
-  const { t } = useTranslation();
-  const thumbnail = event.eventImages?.[0];
+  const { t, i18n } = useTranslation();
+  const isRtl = i18n.language === "ar";
+  const thumbnail = event.image_url;  
 
-  const shareUrl = event.eventExternalLink ?? window.location.href;
+  // const shareUrl = event.eventExternalLink ?? window.location.href;
   const shareLinks = {
-    linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`,
-    twitter: `https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(event.eventTitle)}`,
-    facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`,
+    linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent("shareUrl")}`,
+    twitter: `https://twitter.com/intent/tweet?url=${encodeURIComponent("shareUrl")}&text=${encodeURIComponent(event?.title_ar)}`,
+    facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent("shareUrl")}`,
   };
 
   return (
@@ -36,34 +37,34 @@ export function EventCard({ event, onOpen, index = 0 }: EventCardProps) {
         {thumbnail ? (
           <img
             src={thumbnail}
-            alt={event.eventTitle}
+            alt={event.title_ar}
             className="h-full w-full object-cover transition-smooth hover:scale-105"
             loading="lazy"
           />
         ) : (
           <div className="flex h-full w-full items-center justify-center bg-secondary-50 text-sm text-muted-foreground">
-            {event.eventTitle}
+              {isRtl ? event?.title_ar : event?.description_en}
           </div>
         )}
       </button>
 
       <div className="flex flex-1 flex-col p-5 sm:p-6">
-        <span className="text-sm text-muted-foreground">{event.eventDate}</span>
+        <span className="text-sm text-muted-foreground">{event.created_at}</span>
 
         <button
           type="button"
           onClick={() => onOpen(event)}
           className="mt-1.5 text-start text-base font-bold leading-snug text-primary-900 hover:underline sm:text-lg"
         >
-          {event.eventTitle}
+          {isRtl ? event?.title_ar : event?.title_en}
         </button>
 
         <span className="mt-1.5 text-sm font-medium text-secondary-600">
-          {event.eventTag}
+          {event?.title_ar}
         </span>
 
         <p className="mt-3 line-clamp-3 flex-1 text-sm leading-relaxed text-muted-foreground">
-          {event.eventDescription}
+          {isRtl ? event?.description_ar : event?.description_en}
         </p>
 
         <div className="mt-4 flex items-center gap-3 border-t border-border pt-4">

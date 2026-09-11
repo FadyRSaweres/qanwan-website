@@ -6,7 +6,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import type { EventItem } from "./types";
+import { EventItem } from "../mockData/events";
 
 interface EventDetailsModalProps {
   event: EventItem | null;
@@ -15,14 +15,16 @@ interface EventDetailsModalProps {
 }
 
 export function EventDetailsModal({ event, open, onOpenChange }: EventDetailsModalProps) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const isRtl = i18n.language === "ar";
+
   if (!event) return null;
 
-  const thumbnail = event.eventImages?.[0];
-  const shareUrl = event.eventExternalLink ?? window.location.href;
+  const thumbnail = event?.image_url;
+  const shareUrl = "";
   const shareLinks = {
     linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`,
-    twitter: `https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(event.eventTitle)}`,
+    twitter: `https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(event.title_ar)}`,
     facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`,
   };
 
@@ -31,7 +33,7 @@ export function EventDetailsModal({ event, open, onOpenChange }: EventDetailsMod
       <DialogContent className="max-w-xl gap-0 overflow-hidden p-0 sm:max-w-2xl">
         <DialogHeader className="border-b border-border px-6 py-4">
           <DialogTitle className="text-base font-bold text-primary-900">
-            {event.eventTitle}
+            {isRtl ? event?.title_ar : event?.title_en}
           </DialogTitle>
         </DialogHeader>
 
@@ -39,25 +41,25 @@ export function EventDetailsModal({ event, open, onOpenChange }: EventDetailsMod
           {thumbnail && (
             <img
               src={thumbnail}
-              alt={event.eventTitle}
+              alt={isRtl ? event?.title_ar : event?.title_en}
               className="h-56 w-full object-cover sm:h-72"
             />
           )}
 
           <div className="p-6">
-            <span className="text-sm text-muted-foreground">{event.eventDate}</span>
+            <span className="text-sm text-muted-foreground">{event.date}</span>
             <h3 className="mt-1 text-lg font-bold text-primary-900">
-              {event.eventTitle}
+              {isRtl ? event?.title_ar : event?.title_en}
             </h3>
             <span className="mt-1 block text-sm font-medium text-secondary-600">
-              {event.eventTag}
+              {isRtl ? event?.description_ar : event?.description_en}
             </span>
 
             <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
-              {event.eventDescription}
+              {isRtl ? event?.description_ar : event?.description_en}
             </p>
 
-            {event.eventExternalLink && (
+            {/* {event.eventExternalLink && (
               <a
                 href={event.eventExternalLink}
                 target="_blank"
@@ -67,9 +69,9 @@ export function EventDetailsModal({ event, open, onOpenChange }: EventDetailsMod
                 <ExternalLink className="h-4 w-4" />
                 {t("events.externalLinkCta")}
               </a>
-            )}
+            )} */}
 
-            {event.eventImages && event.eventImages.length > 1 && (
+            {/* {event.image && event.eventImages.length > 1 && (
               <div className="mt-5 grid grid-cols-3 gap-2 sm:grid-cols-4">
                 {event.eventImages.slice(1).map((src, i) => (
                   <img
@@ -81,7 +83,7 @@ export function EventDetailsModal({ event, open, onOpenChange }: EventDetailsMod
                   />
                 ))}
               </div>
-            )}
+            )} */}
 
             <div className="mt-6 flex items-center gap-3 border-t border-border pt-4">
               <span className="text-sm text-muted-foreground">

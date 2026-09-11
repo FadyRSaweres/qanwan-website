@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
-import { type LucideIcon, CheckCircle2, ChevronLeft, Building2 } from "lucide-react";
+import { type LucideIcon, CheckCircle2, ChevronLeft, Building2, Briefcase } from "lucide-react";
 import {
     Dialog,
     DialogContent,
@@ -11,6 +11,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { TitleSection } from "@/components/TitleSection";
+import { InvestmentSector } from "../mockData/about";
 
 /**
  * A related/invested company shown inside the detail dialog.
@@ -50,8 +51,10 @@ export interface CardDetailsData {
 interface InvestmentSectorsSectionProps {
     title: string;
     subtitle: string;
-    cards: CardDetailsData[];
+    cardProps: InvestmentSector[];
 }
+
+
 
 const accentStyles: Record<
     NonNullable<CardDetailsData["accent"]>,
@@ -79,13 +82,40 @@ const accentStyles: Record<
     },
 };
 
+
+
+
 export function InvestmentSectorsSection({
     title,
     subtitle,
-    cards,
+    cardProps,
 }: InvestmentSectorsSectionProps) {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
+    const isRtl = i18n?.language === "ar";
     const [activeCard, setActiveCard] = useState<CardDetailsData | null>(null);
+
+    const cards = useMemo((): CardDetailsData[] => {
+        if (!cardProps) return [];
+
+        return cardProps.map((card, index): CardDetailsData => {
+            const accents: CardDetailsData["accent"][] = ["emerald", "primary", "sky", "secondary"];
+
+            return {
+                id: card.id,
+                cardTitle: isRtl ? card.title_ar : card.title_en,
+                cardSubtitle: isRtl ? "القطاع الاستثماري" : "Investment Sector",
+                icon: Briefcase,
+                overview: "",
+                description: isRtl ? card.slug_ar : card.slug_en,
+                focusAreas: isRtl
+                    ? (card.description_ar ? card.description_ar.split(",").map((f) => f.trim()) : [])
+                    : (card.description_en ? card.description_en.split(",").map((f) => f.trim()) : []),
+                companies: [],
+                accent: accents[index % accents.length],
+            };
+        });
+    }, [cardProps, isRtl]);
+
 
     return (
         <section className="py-16 md:py-28">
@@ -158,10 +188,10 @@ export function InvestmentSectorsSection({
                                             {card.focusAreas.map((area) => (
                                                 <li
                                                     key={area}
-                                                    className="flex items-center justify-between text-sm text-muted-foreground"
+                                                    className="flex items-center justify-start gap-2 text-sm text-muted-foreground"
                                                 >
-                                                    {area}
                                                     <CheckCircle2 className="h-4 w-4 text-secondary-500" />
+                                                    {area}
                                                 </li>
                                             ))}
                                         </ul>
@@ -246,10 +276,10 @@ function SectorDetailsDialog({ card, open, onOpenChange }: SectorDetailsDialogPr
                                 {card.focusAreas.map((area) => (
                                     <div
                                         key={area}
-                                        className="flex items-center justify-between rounded-lg border border-border bg-secondary-50/40 px-4 py-3 text-sm text-foreground"
+                                        className="flex items-center justify-start gap-2 rounded-lg border border-border bg-secondary-50/40 px-4 py-3 text-sm text-foreground"
                                     >
-                                        {area}
                                         <CheckCircle2 className="h-4 w-4 text-secondary-500" />
+                                        {area}
                                     </div>
                                 ))}
                             </div>

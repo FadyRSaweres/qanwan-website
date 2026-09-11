@@ -1,6 +1,7 @@
 import { TitleSection } from "@/components/TitleSection";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
+import { InvestmentModelItem } from "../mockData/about";
 
 export interface InvestmentPortfolio {
     id: string | number;
@@ -10,7 +11,7 @@ export interface InvestmentPortfolio {
 
 interface InvestmentModelSectionProps {
     /** Dynamic, count comes from the DB */
-    portfolios: InvestmentPortfolio[];
+    portfolios: InvestmentModelItem[];
 }
 
 /**
@@ -19,8 +20,8 @@ interface InvestmentModelSectionProps {
  * all inside one outer bordered card.
  */
 export function InvestmentModelSection({ portfolios }: InvestmentModelSectionProps) {
-    const { t } = useTranslation();
-
+    const { t, i18n } = useTranslation();
+    const isRtl = i18n?.language === 'ar';
     return (
         <section className="py-16 md:py-28">
             <div className="container px-4 sm:px-6">
@@ -48,10 +49,10 @@ export function InvestmentModelSection({ portfolios }: InvestmentModelSectionPro
                                 className="rounded-xl bg-background p-5 text-start sm:p-6"
                             >
                                 <h3 className="text-lg font-bold text-primary-900 sm:text-xl">
-                                    {p.title}
+                                    {isRtl ? p?.title_ar : p?.title_en}
                                 </h3>
                                 <p className="mt-2 text-sm leading-relaxed text-muted-foreground sm:text-base">
-                                    {p.text}
+                                    {isRtl ? p?.description_ar : p?.description_en}
                                 </p>
                             </motion.div>
                         ))}

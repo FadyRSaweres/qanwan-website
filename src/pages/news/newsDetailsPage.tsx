@@ -2,13 +2,13 @@ import { useParams, Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { ArrowLeft, Linkedin, Twitter, Facebook, ExternalLink } from "lucide-react";
 import { motion } from "framer-motion";
-import { MOCK_NEWS } from "./index";
+import { mockNewsItems } from ".";
 
 export default function NewsDetailsPage() {
   const { id } = useParams<{ id: string }>();
   const { t } = useTranslation();
 
-  const item = MOCK_NEWS.find((n) => String(n.id) === id) ?? null;
+  const item = mockNewsItems.find((n) => String(n.id) === id) ?? null;
 
   if (!item) {
     return (
@@ -27,7 +27,7 @@ export default function NewsDetailsPage() {
     );
   }
 
-  const shareUrl = item.newsExternalLink ?? window.location.href;
+  // const shareUrl = item.newsExternalLink ?? window.location.href;
 
   return (
     <article className="py-16 md:py-24">
@@ -47,26 +47,26 @@ export default function NewsDetailsPage() {
             transition={{ duration: 0.4 }}
             className="text-2xl font-extrabold tracking-tight text-primary-900 sm:text-3xl"
           >
-            {item.newsTitle}
+            {item.title_ar}
           </motion.h1>
 
           <div className="mt-3 flex items-center gap-2">
-            <span className="text-sm text-muted-foreground">{item.newsDate}</span>
+            <span className="text-sm text-muted-foreground">{item.date}</span>
             <span className="h-1 w-1 rounded-full bg-secondary-500" />
           </div>
 
-          {item.newsImages?.[0] && (
+          {item.image && (
             <motion.img
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.1 }}
-              src={item.newsImages[0]}
-              alt={item.newsTitle}
+              src={item.image_url}
+              alt={item.image_url}
               className="mt-8 w-full rounded-2xl object-cover shadow-card"
             />
           )}
 
-          {item.newsImages && item.newsImages.length > 1 && (
+          {/* {item.newsImages && item.newsImages.length > 1 && (
             <div className="mt-4 grid grid-cols-3 gap-3 sm:grid-cols-4">
               {item.newsImages.slice(1).map((src, i) => (
                 <img
@@ -78,20 +78,20 @@ export default function NewsDetailsPage() {
                 />
               ))}
             </div>
-          )}
+          )} */}
 
           <div className="prose prose-sm mt-8 max-w-none text-foreground sm:prose-base">
-            {item.newsSubtitle && (
-              <p className="font-medium text-foreground">{item.newsSubtitle}</p>
+            {item.title_ar && (
+              <p className="font-medium text-foreground">{item.description_ar}</p>
             )}
-            {item.newsContent && (
+            {item.description_ar && (
               <div className="mt-4 whitespace-pre-line leading-relaxed text-muted-foreground">
-                {item.newsContent}
+                {item.description_ar}
               </div>
             )}
           </div>
 
-          {item.newsExternalLink && (
+          {/* {item.newsExternalLink && (
             <a
               href={item.newsExternalLink}
               target="_blank"
@@ -101,14 +101,14 @@ export default function NewsDetailsPage() {
               <ExternalLink className="h-4 w-4" />
               {t("news.externalLinkCta")}
             </a>
-          )}
+          )} */}
 
           <div className="mt-10 flex items-center gap-4 border-t border-border pt-6">
             <span className="text-sm text-muted-foreground">
               {t("news.shareLabel")}
             </span>
             <a
-              href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`}
+              href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent("shareUrl")}`}
               target="_blank"
               rel="noreferrer"
               aria-label="LinkedIn"
@@ -117,7 +117,7 @@ export default function NewsDetailsPage() {
               <Linkedin className="h-4 w-4" />
             </a>
             <a
-              href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(item.newsTitle)}`}
+              href={`https://twitter.com/intent/tweet?url=${encodeURIComponent("shareUrl")}&text=${encodeURIComponent(item.title_ar)}`}
               target="_blank"
               rel="noreferrer"
               aria-label="X"
@@ -126,7 +126,7 @@ export default function NewsDetailsPage() {
               <Twitter className="h-4 w-4" />
             </a>
             <a
-              href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`}
+              href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent("shareUrl")}`}
               target="_blank"
               rel="noreferrer"
               aria-label="Facebook"

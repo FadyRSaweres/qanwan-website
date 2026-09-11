@@ -13,19 +13,26 @@ export function NewsCard({ news }: NewsCardProps) {
   const navigate = useNavigate();
 
   const goToDetails = () => navigate(`/news/${news.id}`);
-  const thumbnail = news.newsImages?.[0];
+  const thumbnail = news.image_url;
+
+  // const shareLinks = {
+  //   linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(
+  //     news ?? window.location.origin + `/news/${news.id}`
+  //   )}`,
+  //   twitter: `https://twitter.com/intent/tweet?url=${encodeURIComponent(
+  //     news.newsExternalLink ?? window.location.origin + `/news/${news.id}`
+  //   )}&text=${encodeURIComponent(news.newsTitle)}`,
+  //   facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+  //     news.newsExternalLink ?? window.location.origin + `/news/${news.id}`
+  //   )}`,
+  // };
 
   const shareLinks = {
-    linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(
-      news.newsExternalLink ?? window.location.origin + `/news/${news.id}`
-    )}`,
-    twitter: `https://twitter.com/intent/tweet?url=${encodeURIComponent(
-      news.newsExternalLink ?? window.location.origin + `/news/${news.id}`
-    )}&text=${encodeURIComponent(news.newsTitle)}`,
-    facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
-      news.newsExternalLink ?? window.location.origin + `/news/${news.id}`
-    )}`,
+    linkedin: "#",
+    twitter: "#",
+    facebook: "#",
   };
+
 
   return (
     <motion.article
@@ -37,18 +44,18 @@ export function NewsCard({ news }: NewsCardProps) {
     >
       {/* text side */}
       <div className="flex flex-1 flex-col p-6 sm:p-8">
-        <span className="text-sm text-muted-foreground">{news.newsDate}</span>
+        <span className="text-sm text-muted-foreground">{news.date}</span>
 
         <button
           type="button"
           onClick={goToDetails}
           className="mt-2 text-start text-lg font-bold leading-snug text-primary-900 hover:underline sm:text-xl"
         >
-          {news.newsTitle}
+          {news.title_ar}
         </button>
 
         <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-muted-foreground sm:text-base">
-          {news.newsSubtitle}
+          {news.description_ar}
         </p>
 
         <div className="mt-6 flex flex-wrap items-center justify-between gap-4 border-t border-border pt-4">
@@ -117,7 +124,7 @@ export function NewsCard({ news }: NewsCardProps) {
         >
           <img
             src={thumbnail}
-            alt={news.newsTitle}
+            alt={news.title_ar}
             className="h-full w-full object-cover"
             loading="lazy"
           />

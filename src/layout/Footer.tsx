@@ -3,9 +3,12 @@ import { Link } from "react-router-dom";
 import { Mail, Phone, MapPin, Linkedin, Twitter, Facebook, Send } from "lucide-react";
 import { logo64 } from "@/assets/qanwan-logo";
 import { useTranslation } from "react-i18next";
+import { mockCompanyContact } from "@/pages/mockData/contact";
 
 const Footer = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const isRtl = i18n.language === "ar";
+
   const [email, setEmail] = useState("");
 
   const handleSubscribe = (e: React.FormEvent) => {
@@ -30,7 +33,7 @@ const Footer = () => {
 
   const initiativeLinks = [
     { to: "/community", label: t("footer.qanwanCommunity") },
-    { to: "/initiatives/national", label: t("footer.nationalInitiative") },
+    { to: "/initiatives", label: t("footer.nationalInitiative") },
   ];
 
   return (
@@ -40,10 +43,10 @@ const Footer = () => {
           {/* Logo / description / social — rightmost in RTL */}
           <div className="lg:order-1">
             <Link to="/" className="inline-flex items-center gap-2.5">
-              <img src={logo64} alt="Qanwan" className="h-1/3 w-auto object-contain" />
+              <img src={logo64} alt="Qanwan" className="h-1/3 w-auto object-contain dark:invert" />
             </Link>
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-white">
-              {t("footer.tagline")}
+              {isRtl ? mockCompanyContact?.brief_ar : mockCompanyContact?.brief_en}
             </p>
             <div className="mt-5 flex gap-3">
               {[Linkedin, Twitter, Facebook].map((Icon, i) => (
@@ -117,21 +120,21 @@ const Footer = () => {
               <ul className="space-y-3 text-sm text-white">
                 <li className="flex items-start gap-2.5">
                   <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-secondary-500" />
-                  <span>{t("footer.addressValue")}</span>
+                  <span>{isRtl ? mockCompanyContact?.address_ar : mockCompanyContact?.address_en}</span>
                 </li>
                 <li className="flex items-start gap-2.5">
                   <Phone className="mt-0.5 h-4 w-4 shrink-0 text-secondary-500" />
-                  <a href="tel:00218914137373" className="transition-smooth hover:text-white">
-                    00218914137373
+                  <a href={`tel:${mockCompanyContact?.mobile}`} className="transition-smooth hover:text-white">
+                    {mockCompanyContact?.mobile}
                   </a>
                 </li>
                 <li className="flex items-start gap-2.5">
                   <Mail className="mt-0.5 h-4 w-4 shrink-0 text-secondary-500" />
                   <a
-                    href="mailto:info@qinwangruop.com"
+                    href={`mailto:${mockCompanyContact?.email}`}
                     className="transition-smooth hover:text-white"
                   >
-                    info@qinwangruop.com
+                    {mockCompanyContact?.email}
                   </a>
                 </li>
               </ul>

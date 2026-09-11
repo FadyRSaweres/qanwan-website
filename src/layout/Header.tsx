@@ -35,7 +35,7 @@ const Header = () => {
         { to: "/about", label: t("nav.aboutQanwan") },
         { to: "/investment-model", label: t("nav.investmentModel") },
         { to: "/investments", label: t("nav.investments") },
-        { to: "/success-partners", label: t("nav.successPartners") },
+        { to: "/partners", label: t("nav.successPartners") },
         { to: "/performance-indicators", label: t("nav.performanceIndicators") },
       ],
     },
@@ -67,6 +67,7 @@ const Header = () => {
   ];
 
   const toggleLang = () => {
+    window.location.reload();
     i18n.changeLanguage(i18n.language === "ar" ? "en" : "ar");
   };
 
@@ -97,7 +98,7 @@ const Header = () => {
   return (
     <header
       className={cn(
-        "sticky top-0 z-50 w-full transition-smooth ",
+        "sticky top-0 z-50 w-full transition-smooth border-b border-border bg-background/85",
         scrolled
           ? "border-b border-border bg-background/85 backdrop-blur-md shadow-soft"
           : "bg-background/60 backdrop-blur-sm"

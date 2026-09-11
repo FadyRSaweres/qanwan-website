@@ -13,6 +13,8 @@ export interface TimelineMilestone {
 interface JourneyTimelineSectionProps {
   /** Comes from the DB — any length, rendered dynamically */
   milestones: TimelineMilestone[];
+  title?: string;
+  subTitle?: string;
 }
 
 /**
@@ -26,7 +28,7 @@ interface JourneyTimelineSectionProps {
  *
  * Milestone count is dynamic (DB-driven) — no fixed number assumed.
  */
-export function JourneyTimelineSection({ milestones }: JourneyTimelineSectionProps) {
+export function JourneyTimelineSection({ milestones, title, subTitle }: JourneyTimelineSectionProps) {
   const { t } = useTranslation();
 
   return (
@@ -40,8 +42,8 @@ export function JourneyTimelineSection({ milestones }: JourneyTimelineSectionPro
       <div className="container px-4 sm:px-6">
         <TitleSection
           className="mb-12 sm:mb-16"
-          title={t("about.journey.title")}
-          subTitle={t("about.journey.subtitle")}
+          title={title || t("about.journey.title")}
+          subTitle={subTitle || t("about.journey.subtitle")}
         />
 
         <div className="relative mx-auto max-w-4xl">

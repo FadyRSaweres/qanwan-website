@@ -4,12 +4,14 @@
  * for the details page.
  */
 export interface NewsItem {
-  id: string | number;
-  newsTitle: string;
-  newsSubtitle: string;
-  newsDate: string; // ISO date string, e.g. "2026-05-06"
-  newsExternalLink?: string;
-  newsImages: string[];
-  /** Optional full body/content for the details page (rich text or plain paragraphs) */
-  newsContent?: string;
+  id: number;
+  title_ar: string;
+  title_en: string;
+  description_ar: string;
+  description_en: string;
+  image: string;
+  date: string; // ISO 8601 date string, e.g. "2026-09-10T00:00:00.000000Z"
+  created_at: string; // ISO 8601 date string
+  updated_at: string; // ISO 8601 date string
+  image_url: string;
 }

@@ -86,7 +86,10 @@
     "support": "Long-term support"
   },
   "partners": {
-    "title": "Trusted by forward-thinking teams"
+    "title": "Success Partners",
+    "subtitle": "We enhance trust and credibility by showcasing strategic partners, clients, and collaborators.",
+    "paragraph": "We believe that true success is achieved through building strong, sustainable relationships. We are proud of our partnerships with leading organizations across various fields, which contribute to strengthening our capabilities and achieving our shared goals.",
+    "note": "We focus on highlighting the strength of institutional relationships without delving into sensitive contractual or operational details."
   },
   "cta": {
     "title": "Ready to build something extraordinary?",
@@ -95,23 +98,98 @@
   },
   "about": {
     "badge": "About Us",
-    "title": "Building software that businesses trust",
-    "subtitle": "XAI Technology is a software company crafting modern, reliable digital products for ambitious organizations worldwide.",
+    "title": "About Qanwan",
+    "subtitle": "A comprehensive foundation for Qanwan’s corporate identity.",
+    "paragraph": "This page is not a traditional definition, but rather an integrated construction of Qanwan's institutional identity. It includes a clear overview of the institution, its vision, mission, values, and investment philosophy, emphasizing the three-portfolio model with a general formulation that guarantees sustainability and capital preservation, without reviewing the assets or their details.",
     "missionTitle": "Our Mission",
-    "missionText": "To empower businesses with software that's elegant, scalable, and built to last — turning complex challenges into seamless digital experiences.",
+    "missionText": "To develop and manage a diverse and innovative investment portfolio based on good governance and international best practices, maximizing return on investment and building a promising future.",
     "visionTitle": "Our Vision",
-    "visionText": "To be the long-term technology partner of choice for forward-thinking companies that demand excellence in every line of code.",
-    "storyEyebrow": "Our story",
-    "storyTitle": "Years of expertise. Built for what's next.",
-    "storyDesc": "XAI Technology was founded on a simple belief: great software is invisible — it just works. From startups to enterprises, we've helped teams ship products that perform reliably at scale.",
-    "projectsDelivered": "Projects Delivered",
-    "enterpriseClients": "Enterprise Clients",
-    "industriesServed": "Industries Served",
-    "uptimeSLA": "Uptime SLA",
-    "ceoMessage": "A message from our CEO",
-    "ceoQuote": "\"At XAI Technology, we don't just write code — we engineer trust. Every product we ship is a reflection of our commitment to quality, transparency, and the success of the businesses we serve.\"",
-    "teamLine": "A team of senior engineers, designers and strategists.",
-    "workWithUs": "Work With Us"
+    "visionText": "To be the leading investment institution that actively contributes to sustainable economic development while delivering added value to our partners and society.",
+    "values": {
+      "title": "Our Values",
+      "subtitle": "The principles and values that guide all our actions and investments",
+      "excellence": {
+        "title": "Excellence",
+        "text": "Continuously striving for the highest standards of quality and leadership in every investment."
+      },
+      "integrity": {
+        "title": "Integrity & Transparency",
+        "text": "Upholding the highest standards of sound governance and clarity in all our dealings."
+      },
+      "innovation": {
+        "title": "Innovation",
+        "text": "Embracing advanced investment solutions and ideas that embrace the future and create quality value."
+      },
+      "partnership": {
+        "title": "Partnership",
+        "text": "Building solid strategic relationships based on mutual trust and shared growth."
+      }
+    },
+    "philosophy": {
+      "title": "Investment Philosophy",
+      "subtitle": "The foundations of our success",
+      "separator": " : ",
+      "diversification": {
+        "label": "Diversification",
+        "text": "We manage risk and maximize opportunities through a diverse portfolio across multiple sectors."
+      },
+      "smartDisclosure": {
+        "label": "Smart Disclosure",
+        "text": "We commit to transparency that builds trust without revealing details that could be exploited."
+      },
+      "sustainability": {
+        "label": "Sustainability",
+        "text": "We believe in long-term investments that achieve sustainable growth."
+      },
+      "capitalProtection": {
+        "label": "Capital Protection",
+        "text": "We place the protection of our assets and partners at the top of our priorities."
+      }
+    },
+    "journey": {
+      "title": "Our Journey",
+      "subtitle": "Key milestones that shaped our journey of continuous growth and success",
+      "items": {
+        "founding": {
+          "title": "Establishment & Launch",
+          "text": "Launching Qanwan with a clear vision centered on responsible investment and sustainable development."
+        },
+        "diversification": {
+          "title": "Investment Diversification",
+          "text": "Expanding the investment portfolio to include multiple balanced strategic sectors."
+        },
+        "regionalExpansion": {
+          "title": "Regional Expansion",
+          "text": "Enhancing Qanwan's presence in regional markets and establishing new partnerships."
+        },
+        "strategicPartnership": {
+          "title": "Strategic Partnerships",
+          "text": "Partnering with leading institutions to achieve added and sustainable investment value."
+        },
+        "digitalTransformation": {
+          "title": "Digital Transformation & Leadership",
+          "text": "Adopting cutting-edge digital solutions and advanced governance for investment portfolios."
+        }
+      }
+    },
+    "storyEyebrow": "Our Story",
+    "storyTitle": "Years of investment expertise. Built for what's next.",
+    "storyDesc": "Qanwan was founded on a firm belief: real investment creates lasting impact and preserves capital.",
+    "projectsDelivered": "Strategic Projects",
+    "enterpriseClients": "Institutional Partners",
+    "industriesServed": "Investment Sectors",
+    "uptimeSLA": "Governance Rating",
+    "ceoMessage": "Message from Leadership",
+    "ceoQuote": "\"At Qanwan, we do not just manage investments — we build sustainable partnerships that protect assets and maximize value.\"",
+    "teamLine": "A team of senior investment experts and advisors.",
+    "workWithUs": "Work With Us",
+    "investmentModel": {
+      "title": "Investment Model",
+      "subtitle": "Qanwan Investment Structure",
+      "intro": "We rely on a smart structural model that provides flexibility and sustainability with efficiency and minimal risk through three investment portfolios.",
+      "footerTitle": "Integration and Governance",
+      "footerText": "The three portfolios operate in harmony and integration within a sound governance framework that ensures sound decision-making, effective risk management, and the achievement of the group's strategic goals."
+    }
   },
   "services": {
     "badge": "Services",
@@ -269,5 +347,10 @@
     "goalsTitle": "Initiative Goals",
     "subInitiativesTitle": "Initiatives"
   },
-  "nav.login": "Login"
+  "nav.login": "Login",
+  "about.investmentModel.title": "Investment Model",
+  "about.investmentModel.subtitle": "Qanwan Investment Structure",
+  "about.investmentModel.intro": "We rely on a smart structural model that provides flexibility and sustainability with efficiency and minimal risk through three investment portfolios.",
+  "about.investmentModel.footerTitle": "Integration and Governance",
+  "about.investmentModel.footerText": "The three portfolios operate in harmony and integration within a sound governance framework that ensures sound decision-making, effective risk management, and the achievement of the group's strategic goals."
 }

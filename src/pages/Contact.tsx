@@ -7,6 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { toast } from "@/hooks/use-toast";
 import { useTranslation } from "react-i18next";
+import { mockCompanyContact } from "./mockData/contact";
 
 const schema = z.object({
   name: z.string().trim().min(1, "Name is required").max(100),
@@ -17,8 +18,8 @@ const schema = z.object({
 const Contact = () => {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [submitting, setSubmitting] = useState(false);
-  const { t } = useTranslation();
-
+  const { t, i18n } = useTranslation();
+  const isRtl = i18n.language === "ar";
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const result = schema.safeParse(form);
@@ -57,8 +58,8 @@ const Contact = () => {
                 </div>
                 <div>
                   <p className="text-sm font-semibold text-foreground">{t("contact.email")}</p>
-                  <a href="mailto:info@qinwangruop.com" className="text-sm text-muted-foreground transition-smooth hover:text-foreground">
-                    info@qinwangruop.com
+                  <a href={`mailto:${mockCompanyContact?.email}`} className="text-sm text-muted-foreground transition-smooth hover:text-foreground">
+                    {mockCompanyContact?.email}
                   </a>
                 </div>
               </div>
@@ -68,7 +69,7 @@ const Contact = () => {
                 </div>
                 <div>
                   <p className="text-sm font-semibold text-foreground">{t("contact.phone")}</p>
-                  <p className="text-sm text-muted-foreground">00218912345678</p>                </div>
+                  <p className="text-sm text-muted-foreground">{mockCompanyContact?.mobile}</p>                </div>
               </div>
               <div className="flex items-start gap-4">
                 <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-secondary text-foreground">
@@ -76,7 +77,7 @@ const Contact = () => {
                 </div>
                 <div>
                   <p className="text-sm font-semibold text-foreground">{t("contact.office")}</p>
-                  <p className="text-sm text-muted-foreground">{t("contact.officeValue")}</p>
+                  <p className="text-sm text-muted-foreground">{isRtl ? mockCompanyContact?.address_ar : mockCompanyContact?.address_en}</p>
                 </div>
               </div>
             </div>
@@ -151,7 +152,7 @@ const Contact = () => {
           <div className="overflow-hidden rounded-3xl border border-border shadow-soft">
             <iframe
               title="Office location"
-              src="https://www.google.com/maps?q=San+Francisco&output=embed"
+              src="https://www.google.com/maps?q=Libya&output=embed"
               width="100%"
               height="380"
               loading="lazy"
