@@ -35,7 +35,7 @@ const HeroSlider: React.FC<HeroSliderProps> = ({ slides, linkPrefix = "/" }) => 
     const isAr = lang === "ar";
 
     const plugin = React.useRef(
-        Autoplay({ delay: 5000, stopOnInteraction: true })
+        Autoplay({ delay: 3000, stopOnInteraction: true })
     );
 
     const [api, setApi] = React.useState<CarouselApi>();
@@ -58,13 +58,13 @@ const HeroSlider: React.FC<HeroSliderProps> = ({ slides, linkPrefix = "/" }) => 
         <section
             className="relative w-full overflow-hidden"
             style={{ height: "calc(100vh - 64px)", minHeight: 420, maxHeight: 10000 }}
-        // dir={isAr ? "rtl" : "ltr"}
+            dir={isAr ? "rtl" : "ltr"}
         >
 
             <Carousel
                 plugins={[plugin.current]}
                 className="w-full h-full [&_.overflow-hidden]:h-full"
-                opts={{ loop: true }}
+                opts={{ loop: true, direction: isAr ? "rtl" : "ltr" }}
                 setApi={setApi}
                 onMouseEnter={plugin.current.stop}
                 onMouseLeave={plugin.current.reset}

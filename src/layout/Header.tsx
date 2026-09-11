@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
-import { Menu, X, Moon, Sun, Globe, ChevronDown, ArrowRight } from "lucide-react";
+import { Menu, X, Moon, Sun, Globe, ChevronDown, ArrowRight, ArrowLeft } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
@@ -29,14 +29,14 @@ const Header = () => {
   const navItems: INavLink[] = [
     { to: "/", label: t("nav.home", "الرئيسية") },
     {
-      to: "/about",
+      to: "#",
       label: t("nav.about"),
       child: [
-        { to: "/about/qanwan", label: t("nav.aboutQanwan") },
-        { to: "/about/investment-model", label: t("nav.investmentModel") },
-        { to: "/about/investments", label: t("nav.investments") },
-        { to: "/about/success-partners", label: t("nav.successPartners") },
-        { to: "/about/performance-indicators", label: t("nav.performanceIndicators") },
+        { to: "/about", label: t("nav.aboutQanwan") },
+        { to: "/investment-model", label: t("nav.investmentModel") },
+        { to: "/investments", label: t("nav.investments") },
+        { to: "/success-partners", label: t("nav.successPartners") },
+        { to: "/performance-indicators", label: t("nav.performanceIndicators") },
       ],
     },
     {
@@ -58,9 +58,12 @@ const Header = () => {
 
       ]
     },
-    { to: "/academy", label: t("nav.academy") },
-    { to: "/services", label: t("nav.services") },
-    { to: "/contact", label: t("nav.contact") },
+    {
+      to: "/academy", label: t("nav.academy"),
+      child: [
+        { to: "/community", label: t("nav.more") },
+      ]
+    },
   ];
 
   const toggleLang = () => {
@@ -167,7 +170,7 @@ const Header = () => {
                       className="flex items-center justify-between gap-3 rounded-lg px-3 py-2.5 text-sm text-muted-foreground transition-smooth hover:bg-secondary hover:text-foreground"
                     >
                       <span>{child.label}</span>
-                      <ArrowRight className="h-3.5 w-3.5 shrink-0 text-primary" />
+                      <ArrowLeft className="h-3.5 w-3.5 shrink-0 text-primary" />
                     </Link>
                   ))}
                 </div>
@@ -193,7 +196,10 @@ const Header = () => {
             {activeTheme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
           </button>
           <Button asChild size="sm">
-            <Link to="/contact">{t("nav.getInTouch")}</Link>
+            <Link to="/contact">{t("contact.getInTouch")}</Link>
+          </Button>
+          <Button asChild size="sm" variant="outline">
+            <Link to="/contact">{t("nav.login")}</Link>
           </Button>
         </div>
 
@@ -284,7 +290,8 @@ const Header = () => {
               </button>
             </div>
             <Button asChild className="mt-1">
-              <Link to="/contact">{t("nav.getInTouch")}</Link>
+
+              <Link to="/contact">{t("contact.getInTouch")}</Link>
             </Button>
           </nav>
         </div>

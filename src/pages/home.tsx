@@ -9,6 +9,12 @@ import {
   Gauge,
   Rocket,
   CheckCircle2,
+  Users,
+  Box,
+  Briefcase,
+  Globe,
+  Target,
+  TrendingUp,
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -22,6 +28,7 @@ import { useGetHomeSection1Api } from "@/services/home/section1";
 import { useGetHomeSection2Api } from "@/services/home/section2";
 import { useMemo } from "react";
 import HeroSlider, { SlideItem } from "@/components/HeroSlider";
+import { title } from "process";
 
 const Home = () => {
   const { t } = useTranslation();
@@ -30,28 +37,52 @@ const Home = () => {
   const { data: homeSection2Data } = useGetHomeSection2Api();
 
   console.log(homeSection1Data, "useGetHomeSection1Api")
-  const services = useMemo(() => [
+  const investmentModels = useMemo(() => [
     {
-      icon: Code2,
-      title: t("homeServices.webDev"),
-      desc: t("homeServices.webDevDesc")
+      icon: Briefcase,
+      title: t("homeServices.title3"),
+      desc: t("homeServices.description3")
     },
     {
-      icon: Smartphone,
-      title: t("homeServices.mobile"),
-      desc: t("homeServices.mobileDesc")
+      icon: Box,
+      title: t("homeServices.title2"),
+      desc: t("homeServices.description2")
     },
     {
-      icon: Server,
-      title: t("homeServices.backend"),
-      desc: t("homeServices.backendDesc")
-    },
-    {
-      icon: Layers,
-      title: t("homeServices.custom"),
-      desc: t("homeServices.customDesc")
+      icon: Users,
+      title: t("homeServices.title1"),
+      desc: t("homeServices.description1")
     },
   ], [homeSection2Data]);
+
+
+  const stats = useMemo(
+    () => [
+      {
+        icon: TrendingUp,
+        value: t("homeStats.stat4_value"),
+        label: t("homeStats.stat4_label"),
+      },
+      {
+        icon: Briefcase,
+        value: t("homeStats.stat3_value"),
+        label: t("homeStats.stat3_label"),
+      },
+      {
+        icon: Target,
+        value: t("homeStats.stat2_value"),
+        label: t("homeStats.stat2_label"),
+      },
+      {
+        icon: Globe,
+        value: t("homeStats.stat1_value"),
+        label: t("homeStats.stat1_label"),
+      },
+    ],
+    [t]
+  );
+
+
 
   const reasons = [
     { icon: ShieldCheck, title: t("whyUs.trusted"), desc: t("whyUs.trustedDesc") },
@@ -111,7 +142,24 @@ const Home = () => {
       description: "مبادراتنا تركز على تشجيع الابتكار وريادة الأعمال، وتقديم الدعم اللازم للشباب والشركات الناشئة ليكونوا شركاء حقيقيين في صناعة المستقبل الاقتصادي.",
       descriptionEn: "Our initiatives focus on encouraging innovation and entrepreneurship, providing the necessary support for youth and startups to be true partners in shaping the economic future.",
       image: slideImg5
-    }
+    },
+    {
+      id: "mock3",
+      title: "دعم الابتكار والريادة في الأعمال",
+      titleEn: "Supporting Innovation and Entrepreneurship",
+      description: "مبادراتنا تركز على تشجيع الابتكار وريادة الأعمال، وتقديم الدعم اللازم للشباب والشركات الناشئة ليكونوا شركاء حقيقيين في صناعة المستقبل الاقتصادي.",
+      descriptionEn: "Our initiatives focus on encouraging innovation and entrepreneurship, providing the necessary support for youth and startups to be true partners in shaping the economic future.",
+      image: slideImg5
+    },
+    {
+      id: "mock3",
+      title: "دعم الابتكار والريادة في الأعمال",
+      titleEn: "Supporting Innovation and Entrepreneurship",
+      description: "مبادراتنا تركز على تشجيع الابتكار وريادة الأعمال، وتقديم الدعم اللازم للشباب والشركات الناشئة ليكونوا شركاء حقيقيين في صناعة المستقبل الاقتصادي.",
+      descriptionEn: "Our initiatives focus on encouraging innovation and entrepreneurship, providing the necessary support for youth and startups to be true partners in shaping the economic future.",
+      image: slideImg5
+    },
+
   ], []);
 
   return (
@@ -130,12 +178,25 @@ const Home = () => {
         className="py-20 md:py-28">
         <div className="container">
           <SectionHeading
-            eyebrow={t("homeServices.eyebrow")}
+            eyebrow={t("homeServices.future_vision")}
             title={t("homeServices.title")}
             description={t("homeServices.description")}
           />
-          <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {services.map((s) => (
+          <div className="mt-2 flex gap-2 justify-center">
+            <Button variant="default">
+              {t("homeServices.button_more")}
+            </Button>
+            <Button variant="outline">
+              {t('homeServices.button_about')}
+            </Button>
+          </div>
+          <SectionHeading className="mt-16 mb-2"
+            // eyebrow={t("homeServices.future_vision")}
+            title={t("homeServices.title_cards")}
+            description={t("homeServices.subtitle")}
+          />
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {investmentModels.map((s) => (
               <div
                 key={s.title}
                 className="group rounded-2xl border border-border bg-card p-6 transition-smooth hover:-translate-y-1 hover:border-accent/40 hover:shadow-card"
@@ -153,118 +214,40 @@ const Home = () => {
 
       {/* ─── Capabilities (Vector Section) ─── */}
       <motion.section
-        initial={{ opacity: 0, y: 80 }}
+        initial={{ opacity: 0, y: 60 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
         viewport={{ once: true }}
-        className="relative overflow-hidden py-24 md:py-36 bg-background">
-        {/* subtle grid backdrop */}
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0"
-          style={{
-            backgroundImage:
-              "linear-gradient(rgba(99,102,241,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(99,102,241,0.06) 1px, transparent 1px)",
-            backgroundSize: "60px 60px",
-          }}
-        />
-        {/* glow blobs */}
-        <div aria-hidden="true" className="pointer-events-none absolute -top-40 -left-40 h-[500px] w-[500px] rounded-full bg-indigo-600/10 blur-[120px]" />
-        <div aria-hidden="true" className="pointer-events-none absolute -bottom-40 -right-40 h-[500px] w-[500px] rounded-full bg-cyan-500/10 blur-[120px]" />
-
-        <div className="container relative z-10">
-          {/* heading */}
-          <div className="mx-auto mb-16 max-w-2xl text-center">
-            <span className="mb-3 inline-block rounded-full border border-indigo-500/30 bg-indigo-500/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-widest text-indigo-500 dark:text-indigo-300">
-              {t("capabilities.eyebrow")}
-            </span>
-            <h2 className="mt-2 text-3xl font-bold tracking-tight text-foreground sm:text-4xl md:text-5xl">
-              {t("capabilities.titleLine1")} <br />
-              <span className="dark:bg-gradient-to-r dark:from-indigo-400 dark:via-purple-400 dark:to-cyan-400 dark:bg-clip-text dark:text-transparent text-black">
-                {t("capabilities.titleLine2")}
-              </span>
-            </h2>
-            <p className="mt-4 text-sm leading-relaxed text-muted-foreground sm:text-base">
-              {t("capabilities.description")}
-            </p>
-          </div>
-
-          {/* Two-column: left = vector image, right = capability cards */}
-          <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
-
-            {/* Vector illustration */}
-            <div className="relative flex items-center justify-center">
-              {/* decorative ring */}
-              <div
-                aria-hidden="true"
-                className="absolute h-[420px] w-[420px] rounded-full border border-indigo-500/10"
-                style={{ boxShadow: "0 0 80px 2px rgba(99,102,241,0.08) inset" }}
-              />
-              <div
-                aria-hidden="true"
-                className="absolute h-[320px] w-[320px] rounded-full border border-indigo-500/15"
-              />
-              <img
-                src={heroVector}
-                alt="Data Insights, Predictive Analysis, System Integration, Scalable Infrastructure"
-                className="relative z-10 w-full max-w-[420px] drop-shadow-2xl"
-                style={{ filter: "drop-shadow(0 0 40px rgba(99,102,241,0.25))" }}
-              />
-            </div>
-
-            {/* Capability cards */}
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-              {capabilities.map((cap) => (
+        className="relative w-full bg-primary-800 py-14 md:py-16 mb-32"
+      >
+        <div className="container mx-auto px-6">
+          <div className="grid grid-cols-2 gap-y-10 sm:grid-cols-4 sm:gap-y-0">
+            {stats.map((stat, idx) => {
+              const Icon = stat.icon;
+              return (
                 <div
-                  key={cap.label}
-                  className={`group relative overflow-hidden rounded-2xl border border-border bg-gradient-to-br ${cap.color} p-6 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-accent/40 hover:shadow-card`}
+                  key={idx}
+                  className="flex flex-col items-center text-center"
                 >
-                  {/* corner accent */}
-                  <div
-                    aria-hidden="true"
-                    className="absolute -right-4 -top-4 h-16 w-16 rounded-full opacity-30 blur-2xl transition-all duration-300 group-hover:opacity-60"
-                    style={{ background: cap.accent }}
+                  <Icon
+                    className="mb-4 h-8 w-8 text-secondary-500"
+                    strokeWidth={1.5}
                   />
-                  {/* dot */}
-                  <div
-                    className="mb-4 h-2 w-2 rounded-full"
-                    style={{ background: cap.accent, boxShadow: `0 0 8px ${cap.accent}` }}
-                  />
-                  <h3
-                    className="text-sm font-bold uppercase tracking-widest"
-                    style={{ color: cap.accent }}
-                  >
-                    {cap.label}
-                  </h3>
-                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{cap.desc}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Bottom stats bar */}
-          <div className="mt-20 grid grid-cols-2 gap-6 rounded-2xl border border-border bg-secondary/40 p-8 backdrop-blur sm:grid-cols-4">
-            {[
-              { value: t("capabilities.stat1Value"), label: t("capabilities.stat1Label") },
-              { value: t("capabilities.stat2Value"), label: t("capabilities.stat2Label") },
-              { value: t("capabilities.stat3Value"), label: t("capabilities.stat3Label") },
-              { value: t("capabilities.stat4Value"), label: t("capabilities.stat4Label") },
-            ].map((stat) => (
-              <div key={stat.label} className="text-center">
-                <div className="text-3xl font-black tracking-tight text-foreground sm:text-4xl">
+                  <div className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
                   {stat.value}
                 </div>
-                <div className="mt-1 text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                  <div className="mt-2 text-sm font-medium text-gray-300 sm:text-base">
                   {stat.label}
                 </div>
               </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </motion.section>
 
       {/* ─── Why choose us ─── */}
-      <motion.section
+      {/* <motion.section
         initial={{ opacity: 0, y: 80 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
@@ -312,10 +295,10 @@ const Home = () => {
             </div>
           </div>
         </div>
-      </motion.section>
+      </motion.section> */}
 
       {/* ─── Partners ─── */}
-      <motion.section
+      {/* <motion.section
         initial={{ opacity: 0, y: 80 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
@@ -336,10 +319,10 @@ const Home = () => {
             ))}
           </div>
         </div>
-      </motion.section>
+      </motion.section> */}
 
       {/* ─── CTA ─── */}
-      <motion.section
+      {/* <motion.section
         initial={{ opacity: 0, y: 80 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
@@ -358,7 +341,7 @@ const Home = () => {
             </Button>
           </div>
         </div>
-      </motion.section>
+      </motion.section> */}
     </>
   );
 };

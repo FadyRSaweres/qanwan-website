@@ -39,17 +39,36 @@
     "stat4Label": "Expert Support"
   },
   "homeServices": {
-    "eyebrow": "What we do",
-    "title": "Driving Measurable Digital Transformation",
-    "description": "From idea to launch and beyond, we deliver end-to-end software solutions tailored to your goals.",
-    "webDev": "Web Development",
-    "webDevDesc": "Modern, responsive web platforms built to support your business and scale with technology.",
-    "mobile": "Mobile Applications",
-    "mobileDesc": "Exceptional mobile experiences on iOS & Android — high performance with user-centric design.",
-    "backend": "Backend & APIs",
-    "backendDesc": "Robust backend systems and high-performance APIs that connect your ecosystem and support future growth.",
-    "custom": "Custom Software",
-    "customDesc": "Tailored software built around your operations — flexible, scalable, and engineered for efficiency."
+    "eyebrow": "Future Vision",
+    "title": "Vision 2030",
+    "description": "Vision..Planning..Execution..Leadership",
+    "button_more": "Learn more about Qanwan",
+    "button_about": "About Us",
+    "title_cards": "Our Investment Model",
+    "subtitle": "We rely on a balanced investment model that ensures sustainable growth and capital protection.",
+    "title1": "Operational Investment Portfolio",
+    "description1": "Manages and develops our operational projects across vital and diverse sectors.",
+    "title2": "Value Preservation Portfolio",
+    "description2": "Aims to protect assets and enhance their value over the long term.",
+    "title3": "Financial Portfolio",
+    "description3": "Focuses on achieving stable financial returns through diversified investments."
+  },
+  "homeStats": {
+    "stat1_value": "3",
+    "stat1_label": "Regional Markets",
+    "stat2_value": "6",
+    "stat2_label": "Investment Sectors",
+    "stat3_value": "+15",
+    "stat3_label": "Strategic Projects",
+    "stat4_value": "45%",
+    "stat4_label": "Annual Total Growth"
+  },
+  "investmentSectors": {
+    "viewCompaniesLink": "View companies and related details",
+    "focusAreasLabel": "Focus Areas:",
+    "viewDetailsCta": "View Details",
+    "companiesLabel": "Invested Companies",
+    "noCompaniesMessage": "No companies have been added to this sector yet. You can add them from content management with a description and link for each company."
   },
   "whyUs": {
     "eyebrow": "Why XAI",
@@ -156,16 +175,34 @@
     "successDesc": "Thanks for reaching out — we'll be in touch soon.",
     "errorTitle": "Please check your input"
   },
+  "underDevelopment": {
+    "title": "Under Development",
+    "subtitle": "We're currently working on this page. It will be live soon with the best possible experience.",
+    "backHomeCta": "Back to Home"
+  },
   "footer": {
-    "tagline": "Innovative software solutions engineered for performance, scale, and the ambitions of modern businesses.",
-    "company": "Company",
-    "home": "Home",
-    "aboutUs": "About Us",
-    "services": "Services",
-    "contact": "Contact",
-    "contactTitle": "Contact",
-    "rights": "© {{year}} XAI Technology. All rights reserved.",
-    "builtWith": "Built with precision. Designed for trust."
+    "tagline": "Qanwan Investment and Business Group Management Company. Committed to building a sustainable future through strategic investments and a long-term vision.",
+    "aboutCompanyTitle": "About the Company",
+    "qanwan": "Qanwan",
+    "investmentModel": "Investment Model",
+    "ourInvestments": "Our Investments",
+    "successPartners": "Success Partners",
+    "performanceIndicators": "Performance Indicators",
+    "academyTitle": "Qanwan Academy",
+    "learnMore": "Learn More",
+    "mediaCenterTitle": "Media Center",
+    "news": "News",
+    "events": "Events",
+    "contactTitle": "Contact Us",
+    "addressValue": "Arabi Pasha Street, off Mizran Street, Building 10.06.304, 1st Floor",
+    "initiativesTitle": "Initiatives",
+    "qanwanCommunity": "Qanwan Community",
+    "nationalInitiative": "Qanwan National Initiative",
+    "newsletterTitle": "Latest News",
+    "newsletterText": "Join us to stay up to date with our latest news.",
+    "emailPlaceholder": "Your email address",
+    "subscribeCta": "Subscribe",
+    "rights": "© {{year}} Qanwan Investment Company. All rights reserved."
   },
   "admin": {
     "panel_title": "Content Management",
@@ -203,5 +240,34 @@
   "nav.news": "News",
   "nav.events": "Event",
   "nav.community": "Qanwan Community",
-  "nav.qanwan_national": "Qanwan National Initiative"
+  "nav.qanwan_national": "Qanwan National Initiative",
+  "nav.more": "More",
+  "homeServices.future_vision": "Future Vision",
+  "homeServices.title": "2030",
+  "about.title": "About Qanwan",
+  "about.subtitle": "Integrated building of Qanwan’s corporate identity.",
+  "about.paragraph": "This page is not a traditional definition, but rather an integrated construction of Qanwan's institutional identity. It includes a clear overview of the institution, its vision, mission, values, and investment philosophy, noting the adoption of the three portfolio model with a general formulation that emphasizes the principle of sustainability and capital protection, without reviewing the assets or their details.",
+  "news": {
+    "pageTitle": "Latest News",
+    "pageSubtitle": "Reflecting Qanwan's ongoing presence and activity, including meetings, conferences, and various events and programs.",
+    "shareLabel": "Share:",
+    "enlargeCta": "Enlarge",
+    "readMoreCta": "Read More",
+    "externalLinkCta": "Read on original source",
+    "backToList": "Back to News",
+    "notFound": "This news item could not be found.",
+    "emptyState": "No news available right now."
+  },
+  "events": {
+    "pageTitle": "Events",
+    "pageSubtitle": "Documenting Qanwan's participation in conferences, workshops, and forums, highlighting its role and impact.",
+    "shareLabel": "Share:",
+    "externalLinkCta": "More about this event",
+    "emptyState": "No events available right now."
+  },
+  "initiative": {
+    "goalsTitle": "Initiative Goals",
+    "subInitiativesTitle": "Initiatives"
+  },
+  "nav.login": "Login"
 }

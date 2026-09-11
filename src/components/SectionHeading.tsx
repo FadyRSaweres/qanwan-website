@@ -11,7 +11,7 @@ interface Props {
 const SectionHeading = ({ eyebrow, title, description, align = "center", className }: Props) => (
   <div
     className={cn(
-      "max-w-2xl text-start",
+      "max-w-2xl text-center",
       align === "center" ? "mx-auto text-center" : "text-left",
       className
     )}
@@ -21,11 +21,11 @@ const SectionHeading = ({ eyebrow, title, description, align = "center", classNa
         {eyebrow}
       </span>
     )}
-    <h2 className="text-start text-3xl font-bold tracking-tight text-foreground sm:text-4xl md:text-[2.75rem] md:leading-[1.15]">
+    <h2 className="text-center text-3xl font-bold tracking-tight text-foreground sm:text-4xl md:text-[2.75rem] md:leading-[1.15]">
       {title}
     </h2>
     {description && (
-      <p className="text-start mt-4 text-base leading-relaxed text-muted-foreground sm:text-lg">
+      <p className="text-center mt-4 text-base leading-relaxed text-muted-foreground sm:text-lg">
         {description}
       </p>
     )}

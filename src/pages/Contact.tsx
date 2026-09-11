@@ -43,20 +43,6 @@ const Contact = () => {
 
   return (
     <>
-      <section className="border-b border-border bg-secondary/40 py-20 md:py-28">
-        <div className="container max-w-3xl text-center animate-fade-up">
-          <span className="mb-4 inline-block rounded-full border border-border bg-background px-3 py-1 text-xs font-medium uppercase tracking-wider text-muted-foreground">
-            {t("contact.badge")}
-          </span>
-          <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
-            {t("contact.title")}
-          </h1>
-          <p className="mt-5 text-lg leading-relaxed text-muted-foreground">
-            {t("contact.subtitle")}
-          </p>
-        </div>
-      </section>
-
       <section className="py-20 md:py-28">
         <div className="container grid gap-10 lg:grid-cols-5">
           <div className="lg:col-span-2">
@@ -71,8 +57,8 @@ const Contact = () => {
                 </div>
                 <div>
                   <p className="text-sm font-semibold text-foreground">{t("contact.email")}</p>
-                  <a href="mailto:contact@xaitechnology.com" className="text-sm text-muted-foreground transition-smooth hover:text-foreground">
-                    contact@xaitechnology.com
+                  <a href="mailto:info@qinwangruop.com" className="text-sm text-muted-foreground transition-smooth hover:text-foreground">
+                    info@qinwangruop.com
                   </a>
                 </div>
               </div>
@@ -82,8 +68,7 @@ const Contact = () => {
                 </div>
                 <div>
                   <p className="text-sm font-semibold text-foreground">{t("contact.phone")}</p>
-                  <p className="text-sm text-muted-foreground">+1 (555) 010-2024</p>
-                </div>
+                  <p className="text-sm text-muted-foreground">00218912345678</p>                </div>
               </div>
               <div className="flex items-start gap-4">
                 <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-secondary text-foreground">
