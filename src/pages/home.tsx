@@ -13,29 +13,28 @@ import {
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import SectionHeading from "@/components/SectionHeading";
 import slideImg6 from "@/assets/6.jpg";
 import slideImg5 from "@/assets/5.jpg";
 import { useTranslation } from "react-i18next";
-import { useGetHomeSection1Api } from "@/services/home/section1";
-import { useGetHomeSection2Api } from "@/services/home/section2";
 import { useMemo } from "react";
 import HeroSlider, { SlideItem } from "@/components/HeroSlider";
-import { mockStats } from "./mockData/home";
 import { AnimatedCounter } from "@/components/AnimatedCounter";
 import { useGetHomeCounters, useGetHomeData } from "@/services/home";
+
+const STAT_SKELETON_COUNT = 4;
+const SERVICE_SKELETON_COUNT = 3;
 
 const Home = () => {
   const { t, i18n } = useTranslation();
   const isRtl = i18n.language === "ar";
 
-  const { data: homeSection1Data } = useGetHomeData();
-  const { data: homeCounters } = useGetHomeCounters();
+  const { data: homeSection1Data, isLoading: isHomeDataLoading } = useGetHomeData();
+  const { data: homeCounters, isLoading: isCountersLoading } = useGetHomeCounters();
   const apiData = homeSection1Data?.data[0];
   const apiCounterData = homeCounters?.data;
-  // const { data: homeSection2Data } = useGetHomeSection2Api();
 
-  console.log(apiCounterData, "useGetHomeSection1Api")
   const investmentModels = useMemo(() => [
     {
       icon: Briefcase,
@@ -52,9 +51,7 @@ const Home = () => {
       title: t("homeServices.title1"),
       desc: t("homeServices.description1")
     },
-  ], []);
-
-
+  ], [t]);
 
   const getIconFromType = (type: string) => {
     switch (type) {
@@ -62,15 +59,11 @@ const Home = () => {
         return PlusIcon;
       case "Percentage":
         return TrendingUp;
-      case "Number":
-        return Briefcase;
       default:
         return Briefcase;
     }
   }
 
-
-  // Mockup API data for the hero slider
   const heroSlides: SlideItem[] = useMemo(() => [
     {
       id: "mock1",
@@ -96,31 +89,12 @@ const Home = () => {
       descriptionEn: "Our initiatives focus on encouraging innovation and entrepreneurship, providing the necessary support for youth and startups to be true partners in shaping the economic future.",
       image: slideImg5
     },
-    {
-      id: "mock3",
-      title: "دعم الابتكار والريادة في الأعمال",
-      titleEn: "Supporting Innovation and Entrepreneurship",
-      description: "مبادراتنا تركز على تشجيع الابتكار وريادة الأعمال، وتقديم الدعم اللازم للشباب والشركات الناشئة ليكونوا شركاء حقيقيين في صناعة المستقبل الاقتصادي.",
-      descriptionEn: "Our initiatives focus on encouraging innovation and entrepreneurship, providing the necessary support for youth and startups to be true partners in shaping the economic future.",
-      image: slideImg5
-    },
-    {
-      id: "mock3",
-      title: "دعم الابتكار والريادة في الأعمال",
-      titleEn: "Supporting Innovation and Entrepreneurship",
-      description: "مبادراتنا تركز على تشجيع الابتكار وريادة الأعمال، وتقديم الدعم اللازم للشباب والشركات الناشئة ليكونوا شركاء حقيقيين في صناعة المستقبل الاقتصادي.",
-      descriptionEn: "Our initiatives focus on encouraging innovation and entrepreneurship, providing the necessary support for youth and startups to be true partners in shaping the economic future.",
-      image: slideImg5
-    },
-
   ], []);
 
   return (
     <>
       {/* ─── Hero Slider ─── */}
       <HeroSlider slides={heroSlides} />
-
-
 
       {/* ─── Services ─── */}
       <motion.section
@@ -130,15 +104,25 @@ const Home = () => {
         viewport={{ once: true }}
         className="py-20 md:py-28">
         <div className="container">
-          <SectionHeading
-            eyebrow={t("homeServices.future_vision")}
-            title={isRtl ?
-              apiData?.section_1_title_ar :
-              apiData?.section_1_title_en || t("homeServices.title")}
-            description={isRtl ?
-              apiData?.section_1_description_ar :
-              apiData?.section_1_description_en || t("homeServices.description")}
-          />
+          {isHomeDataLoading ? (
+            <div className="mx-auto max-w-2xl space-y-3 text-center">
+              <Skeleton className="mx-auto h-4 w-24" />
+              <Skeleton className="mx-auto h-8 w-72" />
+              <Skeleton className="mx-auto h-4 w-full" />
+              <Skeleton className="mx-auto h-4 w-5/6" />
+            </div>
+          ) : (
+              <SectionHeading
+                eyebrow={t("homeServices.future_vision")}
+                title={isRtl ?
+                  apiData?.section_1_title_ar :
+                  apiData?.section_1_title_en || t("homeServices.title")}
+                description={isRtl ?
+                  apiData?.section_1_description_ar :
+                  apiData?.section_1_description_en || t("homeServices.description")}
+              />
+          )}
+
           <div className="mt-2 flex gap-2 justify-center">
             <Button variant="default">
               {t("homeServices.button_more")}
@@ -147,28 +131,48 @@ const Home = () => {
               {t('homeServices.button_about')}
             </Button>
           </div>
-          <SectionHeading className="mt-16 mb-2"
-            // eyebrow={t("homeServices.future_vision")}
-            title={isRtl ?
-              apiData?.section_2_title_ar :
-              apiData?.section_2_title_en || t("homeServices.title_cards")}
-            description={isRtl ?
-              apiData?.section_2_description_ar :
-              apiData?.section_2_description_en || t("homeServices.subtitle")}
-          />
+
+          {isHomeDataLoading ? (
+            <div className="mx-auto mb-2 mt-16 max-w-2xl space-y-3 text-center">
+              <Skeleton className="mx-auto h-8 w-64" />
+              <Skeleton className="mx-auto h-4 w-full" />
+            </div>
+          ) : (
+              <SectionHeading className="mt-16 mb-2"
+                title={isRtl ?
+                  apiData?.section_2_title_ar :
+                  apiData?.section_2_title_en || t("homeServices.title_cards")}
+                description={isRtl ?
+                  apiData?.section_2_description_ar :
+                  apiData?.section_2_description_en || t("homeServices.subtitle")}
+              />
+          )}
+
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {investmentModels?.map((s) => (
-              <div
-                key={s.title}
-                className="group rounded-2xl border border-border bg-card p-6 transition-smooth hover:-translate-y-1 hover:border-accent/40 hover:shadow-card"
-              >
-                <div className="mb-5 inline-flex h-11 w-11 items-center justify-center rounded-xl bg-secondary text-foreground transition-smooth group-hover:bg-primary group-hover:text-primary-foreground">
-                  <s.icon className="h-5 w-5" />
+            {isHomeDataLoading
+              ? Array.from({ length: SERVICE_SKELETON_COUNT }).map((_, i) => (
+                <div
+                  key={i}
+                  className="rounded-2xl border border-border bg-card p-6"
+                >
+                  <Skeleton className="mb-5 h-11 w-11 rounded-xl" />
+                  <Skeleton className="mb-2 h-4 w-32" />
+                  <Skeleton className="h-4 w-full" />
+                  <Skeleton className="mt-2 h-4 w-5/6" />
                 </div>
-                <h3 className="text-base font-semibold text-foreground">{s.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{s.desc}</p>
-              </div>
-            ))}
+              ))
+              : investmentModels?.map((s) => (
+                <div
+                  key={s.title}
+                  className="group rounded-2xl border border-border bg-card p-6 transition-smooth hover:-translate-y-1 hover:border-accent/40 hover:shadow-card"
+                >
+                  <div className="mb-5 inline-flex h-11 w-11 items-center justify-center rounded-xl bg-secondary text-foreground transition-smooth group-hover:bg-primary group-hover:text-primary-foreground">
+                    <s.icon className="h-5 w-5" />
+                  </div>
+                  <h3 className="text-base font-semibold text-foreground">{s.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{s.desc}</p>
+                </div>
+              ))}
           </div>
         </div>
       </motion.section>
@@ -183,130 +187,41 @@ const Home = () => {
       >
         <div className="container mx-auto px-6">
           <div className="grid grid-cols-2 gap-y-10 sm:grid-cols-4 sm:gap-y-0">
-            {apiCounterData?.map((stat, idx) => {
-              const Icon = getIconFromType(stat.type);
-              return (
-                <div
-                  key={idx}
-                  className="flex flex-col items-center text-center"
-                >
-                  <Icon
-                    className="mb-4 h-8 w-8 text-secondary-500"
-                    strokeWidth={1.5}
-                  />
-                  <motion.div className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
-                    <AnimatedCounter
-                      to={stat.count}
-                      suffix={stat.type === "Percentage" ? "%" : ""}
-                      duration={2}
-                    />
-                  </motion.div>
-                  <div className="mt-2 text-sm font-medium text-gray-300 sm:text-base">
-                    {isRtl ? stat.title_ar : stat.title_en}
+            {isCountersLoading
+              ? Array.from({ length: STAT_SKELETON_COUNT }).map((_, idx) => (
+                <div key={idx} className="flex flex-col items-center text-center">
+                  <Skeleton className="mb-4 h-8 w-8 rounded-full bg-white/20" />
+                  <Skeleton className="h-9 w-16 bg-white/20" />
+                  <Skeleton className="mt-2 h-4 w-24 bg-white/20" />
                 </div>
-              </div>
-              );
-            })}
+              ))
+              : apiCounterData?.map((stat, idx) => {
+                const Icon = getIconFromType(stat.type);
+                return (
+                  <div
+                    key={idx}
+                    className="flex flex-col items-center text-center"
+                  >
+                    <Icon
+                      className="mb-4 h-8 w-8 text-secondary-500"
+                      strokeWidth={1.5}
+                    />
+                    <motion.div className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
+                      <AnimatedCounter
+                        to={stat.count}
+                        suffix={stat.type === "Percentage" ? "%" : ""}
+                        duration={2}
+                      />
+                    </motion.div>
+                    <div className="mt-2 text-sm font-medium text-gray-300 sm:text-base">
+                      {isRtl ? stat.title_ar : stat.title_en}
+                    </div>
+                  </div>
+                );
+              })}
           </div>
         </div>
       </motion.section>
-
-      {/* ─── Why choose us ─── */}
-      {/* <motion.section
-        initial={{ opacity: 0, y: 80 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        viewport={{ once: true }}
-        className="relative bg-secondary/40 py-20 md:py-28">
-        <img
-          src={whyChooseBg}
-          alt=""
-          aria-hidden="true"
-          width={1920}
-          height={1080}
-          className="absolute inset-0 h-full w-full object-cover opacity-20"
-        />
-        <div className="container">
-          <div className="grid items-start gap-12 lg:grid-cols-2">
-            <SectionHeading
-              align="left"
-              eyebrow={t("whyUs.eyebrow")}
-              title={t("whyUs.title")}
-              description={t("whyUs.description")}
-              className="lg:sticky lg:top-28 "
-            />
-            <div className="space-y-5">
-              {reasons.map((r) => (
-                <div
-                  key={r.title}
-                  className="flex gap-5 rounded-2xl border border-border bg-background p-6 transition-smooth hover:shadow-card"
-                >
-                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-foreground text-background">
-                    <r.icon className="h-5 w-5" />
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-foreground">{r.title}</h3>
-                    <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{r.desc}</p>
-                  </div>
-                </div>
-              ))}
-              <ul className="grid gap-2 pt-2 sm:grid-cols-2">
-                {[t("whyUs.uptime"), t("whyUs.agile"), t("whyUs.senior"), t("whyUs.support")].map((item) => (
-                  <li key={item} className="flex items-center gap-2 text-sm text-foreground">
-                    <CheckCircle2 className="h-4 w-4 text-accent" /> {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </div>
-      </motion.section> */}
-
-      {/* ─── Partners ─── */}
-      {/* <motion.section
-        initial={{ opacity: 0, y: 80 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        viewport={{ once: true }}
-        className="py-20">
-        <div className="container">
-          <p className="text-center text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-            {t("partners.title")}
-          </p>
-          <div className="mt-8 grid grid-cols-2 items-center gap-x-8 gap-y-6 sm:grid-cols-3 md:grid-cols-6">
-            {["Acme", "Northwind", "Globex", "Initech", "Umbra", "Vertex"].map((name) => (
-              <div
-                key={name}
-                className="flex h-12 items-center justify-center rounded-md text-base font-semibold tracking-wide text-muted-foreground/70 transition-smooth hover:text-foreground"
-              >
-                {name}
-              </div>
-            ))}
-          </div>
-        </div>
-      </motion.section> */}
-
-      {/* ─── CTA ─── */}
-      {/* <motion.section
-        initial={{ opacity: 0, y: 80 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        viewport={{ once: true }}
-        className="pb-24">
-        <div className="container">
-          <div className="overflow-hidden rounded-3xl bg-gradient-hero px-8 py-14 text-center text-white md:px-14 md:py-20">
-            <h2 className="mx-auto max-w-2xl text-3xl font-bold tracking-tight sm:text-4xl">
-              {t("cta.title")}
-            </h2>
-            <p className="mx-auto mt-4 max-w-xl text-white/75">
-              {t("cta.subtitle")}
-            </p>
-            <Button asChild size="lg" className="mt-8 bg-white text-black hover:bg-white/90">
-              <Link to="/contact">{t("cta.button")} <ArrowRight className="ms-1.5 h-4 w-4" /></Link>
-            </Button>
-          </div>
-        </div>
-      </motion.section> */}
     </>
   );
 };

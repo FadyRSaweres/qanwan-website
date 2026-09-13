@@ -3,14 +3,20 @@ import { useTranslation } from "react-i18next";
 import { ArrowLeft, Linkedin, Twitter, Facebook, ExternalLink } from "lucide-react";
 import { motion } from "framer-motion";
 import { mockNewsItems } from ".";
+import { useGetNewsDetails } from "@/services/news";
+import { NewsItem } from "./types";
 
 export default function NewsDetailsPage() {
   const { id } = useParams<{ id: string }>();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
-  const item = mockNewsItems.find((n) => String(n.id) === id) ?? null;
+  const { data: newsApiData } = useGetNewsDetails(id!);
 
-  if (!item) {
+  const isRtl = i18n.language === "ar";
+
+  const apiData: NewsItem = newsApiData?.data
+
+  if (!newsApiData?.data) {
     return (
       <div className="container px-4 py-24 text-center sm:px-6">
         <p className="text-lg font-semibold text-foreground">
@@ -47,21 +53,21 @@ export default function NewsDetailsPage() {
             transition={{ duration: 0.4 }}
             className="text-2xl font-extrabold tracking-tight text-primary-900 sm:text-3xl"
           >
-            {item.title_ar}
+            {isRtl ? apiData?.title_ar : apiData?.title_en}
           </motion.h1>
 
           <div className="mt-3 flex items-center gap-2">
-            <span className="text-sm text-muted-foreground">{item.date}</span>
+            <span className="text-sm text-muted-foreground">{new Date(apiData?.date).toLocaleDateString('en-GB')}</span>
             <span className="h-1 w-1 rounded-full bg-secondary-500" />
           </div>
 
-          {item.image && (
+          {apiData?.image_url && (
             <motion.img
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.1 }}
-              src={item.image_url}
-              alt={item.image_url}
+              src={apiData?.image_url}
+              alt={apiData?.image_url}
               className="mt-8 w-full rounded-2xl object-cover shadow-card"
             />
           )}
@@ -81,13 +87,31 @@ export default function NewsDetailsPage() {
           )} */}
 
           <div className="prose prose-sm mt-8 max-w-none text-foreground sm:prose-base">
-            {item.title_ar && (
-              <p className="font-medium text-foreground">{item.description_ar}</p>
+            {isRtl ? (
+              apiData?.description_ar && (
+                <div className="mt-4 whitespace-pre-line leading-relaxed text-muted-foreground">
+                  {apiData?.description_ar}
+                </div>
+              )
+            ) : (
+              apiData?.description_en && (
+                <div className="mt-4 whitespace-pre-line leading-relaxed text-muted-foreground">
+                  {apiData?.description_en}
+                </div>
+              )
             )}
-            {item.description_ar && (
-              <div className="mt-4 whitespace-pre-line leading-relaxed text-muted-foreground">
-                {item.description_ar}
-              </div>
+            {isRtl ? (
+              apiData?.description_ar && (
+                <div className="mt-4 whitespace-pre-line leading-relaxed text-muted-foreground">
+                  {apiData?.description_ar}
+                </div>
+              )
+            ) : (
+              apiData?.description_en && (
+                <div className="mt-4 whitespace-pre-line leading-relaxed text-muted-foreground">
+                  {apiData?.description_en}
+                </div>
+              )
             )}
           </div>
 
@@ -117,7 +141,7 @@ export default function NewsDetailsPage() {
               <Linkedin className="h-4 w-4" />
             </a>
             <a
-              href={`https://twitter.com/intent/tweet?url=${encodeURIComponent("shareUrl")}&text=${encodeURIComponent(item.title_ar)}`}
+              href={`https://twitter.com/intent/tweet?url=${encodeURIComponent("shareUrl")}&text=${encodeURIComponent(newsApiData?.data[0]?.title_ar)}`}
               target="_blank"
               rel="noreferrer"
               aria-label="X"

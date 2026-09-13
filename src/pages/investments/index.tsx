@@ -1,6 +1,5 @@
 import { Wind, Building2 as BuildingIcon, LineChart } from "lucide-react";
-import { CardDetailsData, InvestmentSectorsSection } from "./InvestmentSectorsSection";
-import { mockInvestmentSectors } from "../mockData/about";
+import {  InvestmentSectorsSection } from "./InvestmentSectorsSection";
 import { useGetInvestments } from "@/services/about";
 
 // Suppose your BE returns icon as a string key ("wind", "building", "line-chart") —
@@ -11,8 +10,7 @@ const iconMap = {
     "line-chart": LineChart,
 };
 
-export default function Investments() {
-
+export default function Investments() {    
     const { data: investmentsApiData } = useGetInvestments();
     // pageTitle/pageSubtitle and cards all fetched from CMS
     const pageTitle = "استثماراتنا"; // from BE

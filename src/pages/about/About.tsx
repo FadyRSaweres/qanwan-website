@@ -5,12 +5,13 @@ import { JourneyTimelineSection, TimelineMilestone } from "./JourneyTimelineSect
 import { AboutItem, mockAboutItem } from "../mockData/about";
 import { useMemo } from "react";
 import { useGetAboutData } from "@/services/about";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const About = () => {
   const { t, i18n } = useTranslation();
   const isRtl = i18n.language === "ar";
 
-  const { data: apiAbout } = useGetAboutData();
+  const { data: apiAbout, isLoading } = useGetAboutData();
 
   const firstSection = apiAbout?.data[0] || {} as AboutItem;
   const secondSection = apiAbout?.data[1] || {} as AboutItem;
@@ -19,7 +20,6 @@ const About = () => {
   const TimelineSection = apiAbout?.data[4] || {} as AboutItem;
 
   const VALUE_ICONS_BY_INDEX: LucideIcon[] = [Gem, ShieldCheck, Lightbulb, Handshake];
-
 
   const principles = useMemo(
     () => [
@@ -118,6 +118,90 @@ const About = () => {
     }
     return milestones;
   }, [TimelineSection, isRtl, milestones]);
+
+  if (isLoading) {
+    return (
+      <>
+        <section className="border-b border-border py-20 md:py-28">
+          <div className="container max-w-3xl text-center">
+            <Skeleton className="mx-auto h-4 w-24 mb-3" />
+            <Skeleton className="mx-auto h-8 w-72 mb-5" />
+            <Skeleton className="mx-auto h-4 w-full" />
+            <Skeleton className="mx-auto h-4 w-5/6 mt-2" />
+          </div>
+        </section>
+
+        <section className="py-20 md:py-28">
+          <div className="container">
+            <div className="mb-6 text-center">
+              <Skeleton className="mx-auto h-4 w-24 mb-3" />
+              <Skeleton className="mx-auto h-8 w-64" />
+            </div>
+            <div className="grid gap-10 md:grid-cols-2">
+              {Array.from({ length: 2 }).map((_, i) => (
+                <div key={i} className="rounded-2xl border border-border bg-card p-8">
+                  <Skeleton className="mb-5 h-12 w-12 rounded-xl" />
+                  <Skeleton className="mb-3 h-5 w-32" />
+                  <Skeleton className="h-4 w-full" />
+                  <Skeleton className="mt-2 h-4 w-5/6" />
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="py-20 md:py-28">
+          <div className="container">
+            <div className="mb-14 text-center">
+              <Skeleton className="mx-auto h-4 w-24 mb-3" />
+              <Skeleton className="mx-auto h-8 w-64" />
+            </div>
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+              {Array.from({ length: 4 }).map((_, i) => (
+                <div key={i} className="rounded-2xl border border-border bg-card p-8 text-center">
+                  <Skeleton className="mx-auto mb-5 h-14 w-14 rounded-full" />
+                  <Skeleton className="mx-auto mb-3 h-5 w-24" />
+                  <Skeleton className="mx-auto h-4 w-full" />
+                  <Skeleton className="mx-auto mt-2 h-4 w-5/6" />
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="py-20 md:py-28">
+          <div className="container">
+            <div className="mb-14 text-center">
+              <Skeleton className="mx-auto h-4 w-24 mb-3" />
+              <Skeleton className="mx-auto h-8 w-64" />
+            </div>
+            <div className="mx-auto grid max-w-4xl gap-x-10 gap-y-8 sm:grid-cols-2">
+              {Array.from({ length: 4 }).map((_, i) => (
+                <div key={i} className="border-t border-border pt-6">
+                  <Skeleton className="h-4 w-full" />
+                  <Skeleton className="mt-2 h-4 w-4/5" />
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="py-20 md:py-28">
+          <div className="container">
+            <div className="mb-14 text-center">
+              <Skeleton className="mx-auto h-4 w-24 mb-3" />
+              <Skeleton className="mx-auto h-8 w-64" />
+            </div>
+            <div className="flex gap-6 overflow-hidden">
+              {Array.from({ length: 5 }).map((_, i) => (
+                <Skeleton key={i} className="h-40 w-48 shrink-0 rounded-2xl" />
+              ))}
+            </div>
+          </div>
+        </section>
+      </>
+    );
+  }
 
   return (
     <>
@@ -236,7 +320,6 @@ const About = () => {
         </div>
       </section>
 
-
       <JourneyTimelineSection
         title={
           (isRtl ? TimelineSection?.title_ar : TimelineSection?.title_en) ||
@@ -248,60 +331,6 @@ const About = () => {
         }
         milestones={timelineMilestones}
       />
-
-
-      {/* <section className="bg-secondary/40 py-20 md:py-28">
-        <div className="container grid gap-12 lg:grid-cols-2 lg:items-center">
-          <SectionHeading
-            align="left"
-            eyebrow={t("about.storyEyebrow")}
-            title={t("about.storyTitle")}
-            description={t("about.storyDesc")}
-          />
-          <div className="grid grid-cols-2 gap-5">
-            {[
-              { k: "150+", v: t("about.projectsDelivered") },
-              { k: "40+", v: t("about.enterpriseClients") },
-              { k: "12+", v: t("about.industriesServed") },
-              { k: "99.9%", v: t("about.uptimeSLA") },
-            ].map((s) => (
-              <div key={s.v} className="rounded-2xl border border-border bg-background p-6 text-center">
-                <div className="text-3xl font-bold text-foreground sm:text-4xl">{s.k}</div>
-                <div className="mt-1 text-sm text-muted-foreground">{s.v}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section> */}
-
-      {/* <section className="py-20 md:py-28">
-        <div className="container">
-          <div className="mx-auto max-w-3xl rounded-3xl border border-border bg-card p-8 shadow-soft md:p-12">
-            <div className="flex items-center gap-4">
-              <div className="flex h-14 w-14 items-center justify-center rounded-full bg-foreground text-background">
-                <Award className="h-6 w-6" />
-              </div>
-              <div>
-                <p className="text-sm font-semibold text-foreground">{t("about.ceoMessage")}</p>
-                <p className="text-xs text-muted-foreground">XAI Technology</p>
-              </div>
-            </div>
-            <blockquote className="mt-6 text-lg leading-relaxed text-foreground md:text-xl">
-              {t("about.ceoQuote")}
-            </blockquote>
-            <div className="mt-6 flex items-center gap-2 text-sm text-muted-foreground">
-              <Users className="h-4 w-4" />
-              <span>{t("about.teamLine")}</span>
-            </div>
-          </div>
-
-          <div className="mt-14 text-center">
-            <Button asChild size="lg">
-              <Link to="/contact">{t("about.workWithUs")}</Link>
-            </Button>
-          </div>
-        </div>
-      </section> */}
     </>
   );
 };

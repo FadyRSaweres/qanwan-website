@@ -2,6 +2,7 @@ import { useTranslation } from "react-i18next";
 import type { NewsItem } from "./types";
 import { TitleSection } from "@/components/TitleSection";
 import { NewsCard } from "./newsCard";
+import { useGetNews } from "@/services/news";
 
 export const mockNewsItems: NewsItem[] = [
   {
@@ -73,6 +74,8 @@ export const mockNewsItems: NewsItem[] = [
 export default function NewsListPage() {
   const { t } = useTranslation();
 
+  const { data: newsApiData } = useGetNews();
+
   return (
     <section className="py-16 md:py-28">
       <div className="container px-4 sm:px-6">
@@ -82,13 +85,13 @@ export default function NewsListPage() {
           subTitle={t("news.pageSubtitle")}
         />
 
-        {mockNewsItems.length === 0 ? (
+        {newsApiData?.data?.length === 0 ? (
           <div className="rounded-2xl border border-border bg-card p-10 text-center text-muted-foreground">
             {t("news.emptyState")}
           </div>
         ) : (
           <div className="mx-auto flex max-w-5xl flex-col gap-6">
-              {mockNewsItems.map((item) => (
+              {newsApiData?.data?.map((item) => (
               <NewsCard key={item.id} news={item} />
             ))}
           </div>

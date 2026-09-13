@@ -44,7 +44,7 @@ export function NewsCard({ news }: NewsCardProps) {
     >
       {/* text side */}
       <div className="flex flex-1 flex-col p-6 sm:p-8">
-        <span className="text-sm text-muted-foreground">{news.date}</span>
+        <span className="text-sm text-muted-foreground">{new Date(news.date).toLocaleDateString('en-GB')}</span>
 
         <button
           type="button"

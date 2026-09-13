@@ -3,11 +3,13 @@ import { Link } from "react-router-dom";
 import { Mail, Phone, MapPin, Linkedin, Twitter, Facebook, Send } from "lucide-react";
 import { logo64 } from "@/assets/qanwan-logo";
 import { useTranslation } from "react-i18next";
-import { mockCompanyContact } from "@/pages/mockData/contact";
+import { useGetCompanyInfo } from "@/services/contact";
 
 const Footer = () => {
   const { t, i18n } = useTranslation();
   const isRtl = i18n.language === "ar";
+
+  const { data: companyInfoData } = useGetCompanyInfo();
 
   const [email, setEmail] = useState("");
 
@@ -46,7 +48,7 @@ const Footer = () => {
               <img src={logo64} alt="Qanwan" className="h-1/3 w-auto object-contain dark:invert" />
             </Link>
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-white">
-              {isRtl ? mockCompanyContact?.brief_ar : mockCompanyContact?.brief_en}
+              {isRtl ? companyInfoData?.data[0]?.brief_ar : companyInfoData?.data[0]?.brief_en}
             </p>
             <div className="mt-5 flex gap-3">
               {[Linkedin, Twitter, Facebook].map((Icon, i) => (
@@ -120,21 +122,21 @@ const Footer = () => {
               <ul className="space-y-3 text-sm text-white">
                 <li className="flex items-start gap-2.5">
                   <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-secondary-500" />
-                  <span>{isRtl ? mockCompanyContact?.address_ar : mockCompanyContact?.address_en}</span>
+                  <span>{isRtl ? companyInfoData?.data[0]?.address_ar : companyInfoData?.data[0]?.address_en}</span>
                 </li>
                 <li className="flex items-start gap-2.5">
                   <Phone className="mt-0.5 h-4 w-4 shrink-0 text-secondary-500" />
-                  <a href={`tel:${mockCompanyContact?.mobile}`} className="transition-smooth hover:text-white">
-                    {mockCompanyContact?.mobile}
+                  <a href={`tel:${companyInfoData?.data[0]?.mobile}`} className="transition-smooth hover:text-white">
+                    {companyInfoData?.data[0]?.mobile}
                   </a>
                 </li>
                 <li className="flex items-start gap-2.5">
                   <Mail className="mt-0.5 h-4 w-4 shrink-0 text-secondary-500" />
                   <a
-                    href={`mailto:${mockCompanyContact?.email}`}
+                    href={`mailto:${companyInfoData?.data[0]?.email}`}
                     className="transition-smooth hover:text-white"
                   >
-                    {mockCompanyContact?.email}
+                    {companyInfoData?.data[0]?.email}
                   </a>
                 </li>
               </ul>

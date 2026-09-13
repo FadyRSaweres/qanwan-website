@@ -2,11 +2,19 @@ import { useQuery } from "@tanstack/react-query";
 import { apiFetch } from "../client";
 import { NewsItem } from "@/pages/news/types";
 
-export const useGetSliders = () =>
+export const useGetNews = () =>
     useQuery({
-        queryKey: ["useGetSlidersKey"],
+        queryKey: ["useGetNewsKey"],
         queryFn: () => apiFetch<NewsItem>("/news", { method: "GET", requiredToken: false }),
-        // filter: (data) => data.data.filter((item) => item.add_to_slider === true),
+        retry: 0,
+        staleTime: 5 * 60 * 1000,
+    });
+
+
+export const useGetNewsDetails = (id: string) =>
+    useQuery({
+        queryKey: ["useGetNewsDetailsKey", id],
+        queryFn: () => apiFetch<NewsItem>(`/news/${id}`, { method: "GET", requiredToken: false }),
         retry: 0,
         staleTime: 5 * 60 * 1000,
     });

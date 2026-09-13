@@ -4,6 +4,7 @@ import { EventCard } from "./eventCard";
 import { EventDetailsModal } from "./eventDetailsModal";
 import { TitleSection } from "@/components/TitleSection";
 import { EventItem, mockEventItems } from "../mockData/events";
+import { useGetEvents } from "@/services/events";
 
 
 /**
@@ -14,6 +15,8 @@ import { EventItem, mockEventItems } from "../mockData/events";
 export default function EventsListPage() {
   const { t } = useTranslation();
   const [activeEvent, setActiveEvent] = useState<EventItem | null>(null);
+
+  const { data: eventsApiData } = useGetEvents();
 
   return (
     <section className="py-16 md:py-28">
@@ -30,7 +33,7 @@ export default function EventsListPage() {
           </div>
         ) : (
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {mockEventItems.map((event, idx) => (
+              {eventsApiData?.data?.map((event, idx) => (
               <EventCard
                 key={event.id}
                 event={event}

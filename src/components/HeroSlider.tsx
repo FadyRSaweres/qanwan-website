@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { getCurrentLanguage } from "@/services/client";
 import { useGetSliders } from "@/services/home";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export interface SlideItem {
     id: number | string;
@@ -31,7 +32,7 @@ const HeroSlider: React.FC<HeroSliderProps> = ({ slides, linkPrefix = "/" }) => 
     const lang = getCurrentLanguage();
     const isAr = lang === "ar";
 
-    const { data: sliders } = useGetSliders();
+    const { data: sliders, isLoading: isSlidersLoading } = useGetSliders();
     const [emblaRef, emblaApi] = useEmblaCarousel(
         {
             loop: true,
@@ -65,7 +66,31 @@ const HeroSlider: React.FC<HeroSliderProps> = ({ slides, linkPrefix = "/" }) => 
         else emblaApi?.scrollNext();
     }, [emblaApi, isAr]);
 
-    if (!slides || slides.length === 0) return null;
+    if (isSlidersLoading) {
+        return (
+            <section
+                className="relative w-full overflow-hidden"
+                style={{ height: "calc(100vh - 64px)", minHeight: 420 }}
+                dir={isAr ? "rtl" : "ltr"}
+            >
+                <Skeleton className="absolute inset-0 h-full w-full rounded-none" />
+                <div
+                    className="relative z-10 h-full flex items-center"
+                    style={{ paddingInlineStart: "6%", paddingInlineEnd: "40%" }}
+                >
+                    <div className="max-w-[600px] space-y-5 w-full">
+                        <Skeleton className="h-9 w-3/4" />
+                        <Skeleton className="h-4 w-full" />
+                        <Skeleton className="h-4 w-5/6" />
+                        <Skeleton className="h-4 w-2/3" />
+                        <Skeleton className="h-11 w-36 rounded" />
+                    </div>
+                </div>
+            </section>
+        );
+    }
+
+    if (!sliders || sliders.length === 0) return null;
 
     return (
         <section
