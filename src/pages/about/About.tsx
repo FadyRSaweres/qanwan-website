@@ -1,41 +1,25 @@
-import { Target, Eye, Handshake, Lightbulb, ShieldCheck, Gem } from "lucide-react";
+import { Target, Eye, Handshake, Lightbulb, ShieldCheck, Gem, LucideIcon } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { TitleSection } from "@/components/TitleSection";
 import { JourneyTimelineSection, TimelineMilestone } from "./JourneyTimelineSection";
-import { mockAboutItem } from "../mockData/about";
+import { AboutItem, mockAboutItem } from "../mockData/about";
 import { useMemo } from "react";
+import { useGetAboutData } from "@/services/about";
 
 const About = () => {
   const { t, i18n } = useTranslation();
   const isRtl = i18n.language === "ar";
 
-  const firstSection = mockAboutItem[0];
-  const secondSection = mockAboutItem[1];
-  const thirdSection = mockAboutItem[2];
-  const TimelineSection = mockAboutItem[3];
+  const { data: apiAbout } = useGetAboutData();
 
-  const values = [
-    {
-      icon: Gem,
-      title: t("about.values.excellence.title"),
-      text: t("about.values.excellence.text"),
-    },
-    {
-      icon: ShieldCheck,
-      title: t("about.values.integrity.title"),
-      text: t("about.values.integrity.text"),
-    },
-    {
-      icon: Lightbulb,
-      title: t("about.values.innovation.title"),
-      text: t("about.values.innovation.text"),
-    },
-    {
-      icon: Handshake,
-      title: t("about.values.partnership.title"),
-      text: t("about.values.partnership.text"),
-    },
-  ];
+  const firstSection = apiAbout?.data[0] || {} as AboutItem;
+  const secondSection = apiAbout?.data[1] || {} as AboutItem;
+  const thirdSection = apiAbout?.data[2] || {} as AboutItem;
+  const valuesSection = apiAbout?.data[3] || {} as AboutItem;
+  const TimelineSection = apiAbout?.data[4] || {} as AboutItem;
+
+  const VALUE_ICONS_BY_INDEX: LucideIcon[] = [Gem, ShieldCheck, Lightbulb, Handshake];
+
 
   const principles = useMemo(
     () => [
@@ -60,8 +44,8 @@ const About = () => {
   );
 
   const visionMissionCards = useMemo(() => {
-    if (secondSection?.descriptions && secondSection.descriptions.length > 0) {
-      return secondSection.descriptions.map((desc, idx) => ({
+    if (secondSection && secondSection?.descriptions?.length > 0) {
+      return secondSection?.descriptions?.map((desc, idx) => ({
         icon: idx === 0 ? Eye : Target,
         title:
           (isRtl ? desc.title_ar : desc.title_en) ||
@@ -79,7 +63,7 @@ const About = () => {
 
   const philosophyPrinciples = useMemo(() => {
     if (thirdSection?.descriptions && thirdSection.descriptions.length > 0) {
-      return thirdSection.descriptions.map((desc) => ({
+      return thirdSection?.descriptions?.map((desc) => ({
         label: isRtl ? desc.title_ar : desc.title_en,
         text: isRtl ? desc.description_ar : desc.description_en,
       }));
@@ -124,8 +108,8 @@ const About = () => {
   );
 
   const timelineMilestones: TimelineMilestone[] = useMemo(() => {
-    if (TimelineSection?.descriptions && TimelineSection.descriptions.length > 0) {
-      return TimelineSection.descriptions.map((desc, idx) => ({
+    if (TimelineSection?.descriptions && TimelineSection?.descriptions.length > 0) {
+      return TimelineSection?.descriptions.map((desc, idx) => ({
         id: desc.id ?? idx + 1,
         year: desc.created_at ? desc.created_at.slice(0, 4) : (1990 + idx * 5).toString(),
         title: (isRtl ? desc.title_ar : desc.title_en) || "",
@@ -190,28 +174,31 @@ const About = () => {
         <div className="container">
           <TitleSection
             className="mb-14"
-            title={t("about.values.title")}
-            subTitle={t("about.values.subtitle")}
+            title={isRtl ? valuesSection?.title_ar : valuesSection?.title_en}
+            subTitle={isRtl ? valuesSection?.slug_ar : valuesSection?.slug_en}
           />
 
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {values.map((v) => (
-              <div
-                key={v.title}
-                className="rounded-2xl border border-border bg-card p-8 text-center shadow-soft transition-smooth hover:-translate-y-1 hover:shadow-card"
-              >
-                <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center">
-                  <v.icon
-                    className="h-9 w-9 text-secondary-500"
-                    strokeWidth={1.5}
-                  />
+            {valuesSection?.descriptions?.map((v, idx) => {
+              const IconComponent = VALUE_ICONS_BY_INDEX[idx % VALUE_ICONS_BY_INDEX.length];
+              return (
+                <div
+                  key={v.id}
+                  className="rounded-2xl border border-border bg-card p-8 text-center shadow-soft transition-smooth hover:-translate-y-1 hover:shadow-card"
+                >
+                  <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center">
+                    <IconComponent
+                      className="h-9 w-9 text-secondary-500"
+                      strokeWidth={1.5}
+                    />
+                  </div>
+                  <h3 className="text-lg font-bold text-primary-900">{isRtl ? v.title_ar : v.title_en}</h3>
+                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                    {isRtl ? v.description_ar : v.description_en}
+                  </p>
                 </div>
-                <h3 className="text-lg font-bold text-primary-900">{v.title}</h3>
-                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-                  {v.text}
-                </p>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>

@@ -3,12 +3,13 @@ import { apiFetch } from "../client";
 import { HomeSection, StatItem } from "@/pages/mockData/home";
 import { IResponse } from "../client";
 import { NewsItem } from "@/pages/news/types";
+import { AboutItem } from "@/pages/mockData/about";
 
 // ─── GET ─────────────────────────────────────────────
-export const useGetHomeData = () =>
+export const useGetAboutData = () =>
     useQuery({
-        queryKey: ["useGetHomeDataKey"],
-        queryFn: () => apiFetch<HomeSection>("/home", { method: "GET", requiredToken: false }),
+        queryKey: ["useGetAboutDataKey"],
+        queryFn: () => apiFetch<AboutItem>("/about", { method: "GET", requiredToken: false }),
         retry: 0,
         staleTime: 5 * 60 * 1000,
     });
@@ -28,7 +29,7 @@ export const useGetSliders = () =>
         queryKey: ["useGetSlidersKey"],
         queryFn: () => apiFetch<NewsItem>("/news", { method: "GET", requiredToken: false }),
         // filter: (data) => data.data.filter((item) => item.add_to_slider === true),
-        select: (data) => data.data.filter((item) => item.add_to_slider === true),  
+        select: (data) => data.data.filter((item) => item.add_to_slider === true),
         retry: 0,
         staleTime: 5 * 60 * 1000,
     });

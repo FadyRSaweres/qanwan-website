@@ -11,6 +11,11 @@ interface FetchOptions extends RequestInit {
     responseType?: 'json' | 'blob';
 }
 
+export interface IResponse<T> {
+    data: T[];
+    status: string;
+    message: string;
+}
 
 
 export const getCurrentLanguage = () => {
@@ -20,7 +25,7 @@ export const getCurrentLanguage = () => {
 export async function apiFetch<T>(
     url: string,
     options: FetchOptions = {}
-): Promise<any> {
+): Promise<IResponse<T>> {
     const {
         body,
         headers,

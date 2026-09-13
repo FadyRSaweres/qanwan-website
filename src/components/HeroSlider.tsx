@@ -7,6 +7,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { getCurrentLanguage } from "@/services/client";
+import { useGetSliders } from "@/services/home";
 
 export interface SlideItem {
     id: number | string;
@@ -25,10 +26,12 @@ interface HeroSliderProps {
 }
 
 const HeroSlider: React.FC<HeroSliderProps> = ({ slides, linkPrefix = "/" }) => {
+
     const { t } = useTranslation();
     const lang = getCurrentLanguage();
     const isAr = lang === "ar";
 
+    const { data: sliders } = useGetSliders();
     const [emblaRef, emblaApi] = useEmblaCarousel(
         {
             loop: true,
@@ -74,10 +77,10 @@ const HeroSlider: React.FC<HeroSliderProps> = ({ slides, linkPrefix = "/" }) => 
             <div ref={emblaRef} className="overflow-hidden h-full w-full">
                 {/* Embla container — no margin/padding so loop clones measure correctly */}
                 <div className="flex h-full">
-                    {slides.map((slide, index) => {
-                        const title = isAr ? slide.title : slide.titleEn;
-                        const description = isAr ? slide.description : slide.descriptionEn;
-                        const href = slide.link ?? `${linkPrefix}${slide.id}`;
+                    {sliders?.map((slide, index) => {
+                        const title = isAr ? slide.title_ar : slide.title_en;
+                        const description = isAr ? slide.description_ar : slide.description_en;
+                        const href = slide.image_url ?? `${linkPrefix}${slide.id}`;
 
                         return (
                             <div
@@ -87,7 +90,7 @@ const HeroSlider: React.FC<HeroSliderProps> = ({ slides, linkPrefix = "/" }) => 
                                 {/* Background image */}
                                 <div
                                     className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-                                    style={{ backgroundImage: `url(${slide.image})` }}
+                                    style={{ backgroundImage: `url(${slide.image_url})` }}
                                 >
                                     {/* Dark overlay */}
                                     <div

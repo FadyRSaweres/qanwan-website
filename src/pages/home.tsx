@@ -9,6 +9,7 @@ import {
   Globe,
   Target,
   TrendingUp,
+  PlusIcon,
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -20,17 +21,21 @@ import { useGetHomeSection1Api } from "@/services/home/section1";
 import { useGetHomeSection2Api } from "@/services/home/section2";
 import { useMemo } from "react";
 import HeroSlider, { SlideItem } from "@/components/HeroSlider";
-import { mockHomeSection, mockStats } from "./mockData/home";
+import { mockStats } from "./mockData/home";
 import { AnimatedCounter } from "@/components/AnimatedCounter";
+import { useGetHomeCounters, useGetHomeData } from "@/services/home";
 
 const Home = () => {
   const { t, i18n } = useTranslation();
   const isRtl = i18n.language === "ar";
 
-  const { data: homeSection1Data } = useGetHomeSection1Api();
-  const { data: homeSection2Data } = useGetHomeSection2Api();
+  const { data: homeSection1Data } = useGetHomeData();
+  const { data: homeCounters } = useGetHomeCounters();
+  const apiData = homeSection1Data?.data[0];
+  const apiCounterData = homeCounters?.data;
+  // const { data: homeSection2Data } = useGetHomeSection2Api();
 
-  console.log(homeSection1Data, "useGetHomeSection1Api")
+  console.log(apiCounterData, "useGetHomeSection1Api")
   const investmentModels = useMemo(() => [
     {
       icon: Briefcase,
@@ -47,18 +52,20 @@ const Home = () => {
       title: t("homeServices.title1"),
       desc: t("homeServices.description1")
     },
-  ], [homeSection2Data]);
+  ], []);
 
 
 
   const getIconFromType = (type: string) => {
     switch (type) {
-      case "+":
-        return Briefcase;
-      case "%":
+      case "Plus":
+        return PlusIcon;
+      case "Percentage":
         return TrendingUp;
-      case "Empty":
-        return Users;
+      case "Number":
+        return Briefcase;
+      default:
+        return Briefcase;
     }
   }
 
@@ -126,11 +133,11 @@ const Home = () => {
           <SectionHeading
             eyebrow={t("homeServices.future_vision")}
             title={isRtl ?
-              mockHomeSection?.section_1_title_ar :
-              mockHomeSection?.section_1_title_en || t("homeServices.title")}
+              apiData?.section_1_title_ar :
+              apiData?.section_1_title_en || t("homeServices.title")}
             description={isRtl ?
-              mockHomeSection?.section_1_description_ar :
-              mockHomeSection?.section_1_description_en || t("homeServices.description")}
+              apiData?.section_1_description_ar :
+              apiData?.section_1_description_en || t("homeServices.description")}
           />
           <div className="mt-2 flex gap-2 justify-center">
             <Button variant="default">
@@ -143,14 +150,14 @@ const Home = () => {
           <SectionHeading className="mt-16 mb-2"
             // eyebrow={t("homeServices.future_vision")}
             title={isRtl ?
-              mockHomeSection?.section_2_title_ar :
-              mockHomeSection?.section_2_title_en || t("homeServices.title_cards")}
+              apiData?.section_2_title_ar :
+              apiData?.section_2_title_en || t("homeServices.title_cards")}
             description={isRtl ?
-              mockHomeSection?.section_2_description_ar :
-              mockHomeSection?.section_2_description_en || t("homeServices.subtitle")}
+              apiData?.section_2_description_ar :
+              apiData?.section_2_description_en || t("homeServices.subtitle")}
           />
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {investmentModels.map((s) => (
+            {investmentModels?.map((s) => (
               <div
                 key={s.title}
                 className="group rounded-2xl border border-border bg-card p-6 transition-smooth hover:-translate-y-1 hover:border-accent/40 hover:shadow-card"
@@ -176,7 +183,7 @@ const Home = () => {
       >
         <div className="container mx-auto px-6">
           <div className="grid grid-cols-2 gap-y-10 sm:grid-cols-4 sm:gap-y-0">
-            {mockStats.map((stat, idx) => {
+            {apiCounterData?.map((stat, idx) => {
               const Icon = getIconFromType(stat.type);
               return (
                 <div
@@ -190,7 +197,7 @@ const Home = () => {
                   <motion.div className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
                     <AnimatedCounter
                       to={stat.count}
-                      suffix={stat.type === "Empty" ? "" : stat.type}
+                      suffix={stat.type === "Percentage" ? "%" : ""}
                       duration={2}
                     />
                   </motion.div>
