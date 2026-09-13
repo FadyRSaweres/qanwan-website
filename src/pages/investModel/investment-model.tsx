@@ -3,9 +3,11 @@ import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { InvestmentModelSection, InvestmentPortfolio } from "./InvestmentModelSection";
 import { mockInvestmentModel } from "../mockData/about";
+import { useGetInvestModels } from "@/services/about";
 
 export default function InvestmentModel() {
 
+    const { data: investModelApi } = useGetInvestModels();
     const { t } = useTranslation();
     // const portfolios: InvestmentModelItem[] = [
     //     {
@@ -26,6 +28,6 @@ export default function InvestmentModel() {
     // ];
 
     return (
-        <InvestmentModelSection portfolios={mockInvestmentModel} />
+        <InvestmentModelSection portfolios={investModelApi?.data || []} />
     )
 }

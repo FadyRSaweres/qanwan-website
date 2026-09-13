@@ -1,10 +1,13 @@
 import { useTranslation } from "react-i18next";
 import { TitleSection } from "@/components/TitleSection";
-import { mockPartners, Partner } from "./mockData/partners";
+import { Partner } from "./mockData/partners";
+import { useGetParteners } from "@/services/about";
 
 export function PartnersPage() {
     const { t, i18n } = useTranslation();
     const isRtl = i18n.language === "ar";
+
+    const { data: partnersApiData } = useGetParteners();
 
     return (
         <section className="py-20 md:py-28">
@@ -19,7 +22,7 @@ export function PartnersPage() {
             </div>
 
             <div className="container mt-14 grid grid-cols-2 gap-5 sm:grid-cols-4">
-                {mockPartners.map((partner) => {
+                {partnersApiData?.data?.map((partner) => {
                     const title = isRtl ? partner.title_ar : partner.title_en;
                     const hasImage = Boolean(partner.image_url);
 
